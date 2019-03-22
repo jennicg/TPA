@@ -16,7 +16,6 @@ public class Main {
 		
 		System.out.println("O dicionario esta vazio ?" + dic.isEmpty());
 
-		
 		dic.imprimeLista();
 		
 		dic.removeElement("morango");
