@@ -18,7 +18,6 @@ public class Main {
 
 		
 		dic.imprimeLista();
-		//
 		
 		dic.removeElement("morango");
 		RegDados dado = dic.findElement("morango");		
