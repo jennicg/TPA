@@ -17,10 +17,8 @@ public class Main {
 		System.out.println("O dicionario esta vazio ?" + dic.isEmpty());
 
 		dic.imprimeLista();
-		
 		dic.removeElement("morango");
 		RegDados dado = dic.findElement("morango");		
-		
 		if (dado!= null)
 			System.out.println(dado.getWpt() + ", " + dado.getWeng());
 		else
