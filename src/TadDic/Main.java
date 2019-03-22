@@ -34,10 +34,6 @@ public class Main {
 		System.out.println("Entradas" + dic.entradas());
 		System.out.println("Valores: " + dic.valor());
 		dic.imprimeLista();
-		//fim da main
-		
-		
-	
-		
+
 	}
 }
