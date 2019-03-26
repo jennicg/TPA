@@ -10,6 +10,9 @@ public class Main {
 		dic.insertItem("maçã", new RegDados("Maçã","apple"));
 		dic.insertItem("uva", new RegDados("uva","grape"));
 		dic.insertItem("morango", new RegDados("morango","strawberry"));
+		dic.insertItem("morango", new RegDados("morango","strawberry"));
+		System.out.println("AS CHAVES SÃOO: " + dic.keys());
+
 		
 		dic.insertItem("banana", new RegDados("banana","banana"));
 		System.out.println(dic.size());

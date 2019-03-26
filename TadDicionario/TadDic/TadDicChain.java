@@ -71,7 +71,6 @@ public class TadDicChain {
 		else {
 			int pos = buscaItem(vetBuckets[indice],k);
 			if (pos!= -1)
-			
 			while(posList < vetBuckets[pos].size())
 				((DicItem)vetBuckets[pos].get(posList)).setValor(e);
 				posList++;
