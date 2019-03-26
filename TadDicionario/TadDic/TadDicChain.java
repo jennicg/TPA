@@ -62,6 +62,7 @@ public class TadDicChain {
 	public void insertItem(String k, Object e) {
 		Object aux = findElement(k);
 		long cod_hash = hash_func(k);
+		int posList =0;
 		int indice = (int)cod_hash % vetBuckets.length; // utilizar o resto para não exceder o tamanho
 		if (aux == null) {
 			vetBuckets[indice].add(new DicItem(k,e));
@@ -70,7 +71,10 @@ public class TadDicChain {
 		else {
 			int pos = buscaItem(vetBuckets[indice],k);
 			if (pos!= -1)
-			vetBuckets[indice].add(new DicItem(k,e));
+			
+			while(posList < vetBuckets[pos].size())
+				((DicItem)vetBuckets[pos].get(posList)).setValor(e);
+				posList++;
 		}
 
 	}
@@ -115,14 +119,11 @@ public class TadDicChain {
 		}
 	
 	
-
-	
 	public LinkedList<String> keys(){
 		int posItem = 0;
 		if(isEmpty())
 			return null;
-		LinkedList<String> entradas = new LinkedList<String>();
-		
+		LinkedList<String> entradas = new LinkedList<String>();		
 		for(int i = 0; i < vetBuckets.length; i++) {
 			posItem = 0;
 			while (posItem < vetBuckets[i].size()) {
@@ -138,7 +139,6 @@ public class TadDicChain {
 		if(isEmpty())
 			return null;
 		LinkedList<Object> entradas = new LinkedList<Object>();
-		
 		for(int i = 0; i < vetBuckets.length; i++) {
 			posItem = 0;
 			while (posItem < vetBuckets[i].size()) {
@@ -161,10 +161,7 @@ public class TadDicChain {
 				}
 				posItem++;
 			}	 
-		}
-		
-		
-		
+		}		
 	}
 	
 	
