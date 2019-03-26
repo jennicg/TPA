@@ -18,7 +18,7 @@ public class Main {
 
 		dic.imprimeLista();
 		dic.removeElement("morango");
-		RegDados dado = dic.findElement("morango");		
+		RegDados dado = (RegDados)dic.findElement("morango");		
 		if (dado!= null)
 			System.out.println(dado.getWpt() + ", " + dado.getWeng());
 		else
@@ -27,8 +27,8 @@ public class Main {
 		dic.imprimeLista();
 		
 		System.out.println("Chaves: " + dic.keys());
-		System.out.println("Entradas" + dic.entradas());
-		System.out.println("Valores: " + dic.valor());
+		System.out.println("Entradas" + dic.elements());
+
 		dic.imprimeLista();
 
 	}

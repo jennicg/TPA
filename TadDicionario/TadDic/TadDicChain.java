@@ -15,7 +15,6 @@ public class TadDicChain {
 	private LinkedList [] vetBuckets;
 	private double fator_carga = 0.75;
 	private int quant_entradas = 0;
-	private LinkedList<String> keys;
 	
 	public TadDicChain(int quant_entradas) {
 		// TODO Auto-generated constructor stub
@@ -23,10 +22,9 @@ public class TadDicChain {
 		vetBuckets = new LinkedList [tam];
 		
 		for(int i = 0; i< tam; i++) {
-			vetBuckets[i] = new LinkedList <RegDados>(); // DicItem
+			vetBuckets[i] = new LinkedList <DicItem>(); // DicItem
 			
 		}
-		this.keys = new LinkedList<String>();
 	}
 	
 	public TadDicChain () {
@@ -34,7 +32,7 @@ public class TadDicChain {
 		vetBuckets = new LinkedList[tam];
 		
 		for(int i=0;i <tam;i++)
-			vetBuckets[i] = new LinkedList<RegDados>();
+			vetBuckets[i] = new LinkedList<DicItem>();
 	}
 	
 	public int getTamVetBuckets() {
@@ -50,20 +48,31 @@ public class TadDicChain {
 		return soma;	
 	}
 	
-	public void insertItem(String k, RegDados e) {
-		RegDados aux = findElement(k);
-		
-		if (aux == null) {
-			long cod_hash = hash_func(k);
-			int indice = (int)cod_hash % vetBuckets.length; // utilizar o resto para não exceder o tamanho
-			
-			vetBuckets[indice].add(e);
-			quant_entradas++;
-			this.keys.add(e.getWpt());
+	private int buscaItem (LinkedList<DicItem> lst, String k) {
+		int pos = 0;
+		while (pos < lst.size()) {
+			if(((DicItem)(lst.get(pos))).getChave().equals(k))
+				return pos;
+			pos++;
 		}
-		else
-			aux.setWeng(e.getWeng());
-		
+		return -1;
+	}
+	
+	
+	public void insertItem(String k, Object e) {
+		Object aux = findElement(k);
+		long cod_hash = hash_func(k);
+		int indice = (int)cod_hash % vetBuckets.length; // utilizar o resto para não exceder o tamanho
+		if (aux == null) {
+			vetBuckets[indice].add(new DicItem(k,e));
+			quant_entradas++;
+		}
+		else {
+			int pos = buscaItem(vetBuckets[indice],k);
+			if (pos!= -1)
+			vetBuckets[indice].add(new DicItem(k,e));
+		}
+
 	}
 	
 	public int size() {
@@ -71,32 +80,28 @@ public class TadDicChain {
 	}
 
 	
-	public RegDados removeElement(String k) {
-		RegDados aux = findElement(k);
+	public Object removeElement(String k) {
+		Object aux = findElement(k);
 		 long cod_hash = hash_func(k);
 		 int indice = (int)cod_hash % vetBuckets.length; // utilizar o resto para não exceder o tamanho	
-		 int posItem = 0;
-			for(int i = 0; i < vetBuckets.length; i++) {
-				posItem = 0;
-				while (posItem < vetBuckets[i].size()) {
-					if (findElement(k) != null) {
-					 vetBuckets[indice].remove(posItem);
-					 quant_entradas--;
-					}	 
-					posItem++;
-				}
+			if (aux == null)
+				return null;
+			else {
+				int pos = buscaItem(vetBuckets[indice],k);
+				vetBuckets[indice].remove(pos);
+				quant_entradas--;	
 			}
 			return aux;
 	    }
 	
-	public RegDados findElement (String k) {
+	public Object findElement (String k) {
 		long cod_hash = hash_func(k);
 		int indice = (int)cod_hash % vetBuckets.length;
 		
 		int posList =0;
 		while(posList < vetBuckets[indice].size()) {
-			if (((RegDados)(vetBuckets[indice].get(posList))).getWpt().equalsIgnoreCase(k))
-				return (RegDados)vetBuckets[indice].get(posList);
+			if (((DicItem)(vetBuckets[indice].get(posList))).getChave().equalsIgnoreCase(k))
+				return ((DicItem)vetBuckets[indice].get(posList)).getValor();
 			posList++;		
 		}
 		
@@ -104,38 +109,43 @@ public class TadDicChain {
 		
 	}
 	
-	public LinkedList<String> keys(){
-		return this.keys;
-	}
 
 	public boolean isEmpty() {
 		return (quant_entradas == 0);
 		}
 	
 	
-	public LinkedList<RegDados> entradas(){
-		LinkedList<RegDados> entradas = new LinkedList<RegDados>();
-		for (LinkedList<RegDados> lista_dados : this.vetBuckets) {
-			if(lista_dados.size() > 0 ) {
-				for (RegDados info : lista_dados) {
-					entradas.add(info);
-				}
+
+	
+	public LinkedList<String> keys(){
+		int posItem = 0;
+		if(isEmpty())
+			return null;
+		LinkedList<String> entradas = new LinkedList<String>();
+		
+		for(int i = 0; i < vetBuckets.length; i++) {
+			posItem = 0;
+			while (posItem < vetBuckets[i].size()) {
+				entradas.add(((DicItem)(vetBuckets[i].get(posItem))).getChave());
+				posItem++;
 			}
 		}
-		
 		return entradas;
 	}
 	
-	public LinkedList<Object> valor(){
+	public LinkedList<Object> elements(){
+		int posItem = 0;
+		if(isEmpty())
+			return null;
 		LinkedList<Object> entradas = new LinkedList<Object>();
-		for (LinkedList<RegDados> lista_dados : this.vetBuckets) {
-			if(lista_dados.size() > 0) {
-				for(RegDados info : lista_dados) {
-					entradas.add(info.getWeng());
-				}
+		
+		for(int i = 0; i < vetBuckets.length; i++) {
+			posItem = 0;
+			while (posItem < vetBuckets[i].size()) {
+				entradas.add(((DicItem)(vetBuckets[i].get(posItem))).getValor());
+				posItem++;
 			}
 		}
-		
 		return entradas;
 	}
 	
@@ -144,9 +154,9 @@ public class TadDicChain {
 		for(int i = 0; i < vetBuckets.length; i++) {
 			posItem = 0;
 			while (posItem < vetBuckets[i].size()) {
-				if((RegDados)vetBuckets[i].get(posItem) != null) {
-					System.out.print(((RegDados)(vetBuckets[i].get(posItem))).getWpt() + ", ");
-					System.out.println(((RegDados)(vetBuckets[i].get(posItem))).getWeng() + ", ");
+				if((DicItem)vetBuckets[i].get(posItem) != null) {
+					System.out.print(((DicItem)(vetBuckets[i].get(posItem))).getChave() + ", ");
+					System.out.println(((DicItem)(vetBuckets[i].get(posItem))).getValor() + ", ");
 					System.out.println(i + ", " + posItem);
 				}
 				posItem++;
