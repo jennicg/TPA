@@ -11,8 +11,14 @@ public class Main2 {
 		dic.insertItem("Larissa", new EstudanteBsi("Larissa","2812",17));
 		dic.insertItem("Yasmim", new EstudanteBsi("Yasmim","0803",22));
 
+<<<<<<< HEAD
 		System.out.println("COLISÕES " + dic.getColisoes());
 		
+=======
+	
+		System.out.println("Existe colisão ?" + dic.GetColisao());
+
+>>>>>>> refs/remotes/origin/master
 		dic.insertItem("jennifer", new EstudanteBsi("jennifer","2304",21));
 		System.out.println("AS CHAVES SÃO: " + dic.keys());
 		System.out.println(dic.size());
