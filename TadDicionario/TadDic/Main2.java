@@ -14,7 +14,7 @@ public class Main2 {
 
 		
 		dic.insertItem("jennifer", new EstudanteBsi("jennifer","2304",21));
-		System.out.println("AS CHAVES SÃOO: " + dic.keys());
+		System.out.println("AS CHAVES SÃO: " + dic.keys());
 		System.out.println(dic.size());
 		
 		System.out.println("O dicionario esta vazio ?" + dic.isEmpty());

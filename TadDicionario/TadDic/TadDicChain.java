@@ -148,6 +148,7 @@ public class TadDicChain {
 		return entradas;
 	}
 	
+	
 	public void imprimeLista() {
 		int posItem = 0;
 		for(int i = 0; i < vetBuckets.length; i++) {
