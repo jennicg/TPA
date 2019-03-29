@@ -148,6 +148,24 @@ public class TadDicChain {
 		return entradas;
 	}
 	
+	
+	public int GetColisao() {
+		int posItem = 0;
+		LinkedList<Object> colisao = new LinkedList<Object>();
+		for(int i = 0; i < vetBuckets.length; i++) {
+			posItem = 0;
+			while (posItem < vetBuckets[i].size()) {
+				if(vetBuckets[i].size() > 1) 
+					colisao.add(((DicItem)(vetBuckets[i].get(posItem))).getChave());
+					
+
+				posItem++;
+			}	
+		}
+			return colisao.size();
+		
+		}		
+	
 	public void imprimeLista() {
 		int posItem = 0;
 		for(int i = 0; i < vetBuckets.length; i++) {
