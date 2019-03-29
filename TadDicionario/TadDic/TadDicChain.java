@@ -147,8 +147,7 @@ public class TadDicChain {
 		}
 		return entradas;
 	}
-	
-<<<<<<< HEAD
+
 
 	public int[] getColisoes() {
 			int[] colisoes = new int[vetBuckets.length];
@@ -162,25 +161,7 @@ public class TadDicChain {
 			}
 			return colisoes;
 		}
-=======
-	
-	public int GetColisao() {
-		int posItem = 0;
-		LinkedList<Object> colisao = new LinkedList<Object>();
-		for(int i = 0; i < vetBuckets.length; i++) {
-			posItem = 0;
-			while (posItem < vetBuckets[i].size()) {
-				if(vetBuckets[i].size() > 1) 
-					colisao.add(((DicItem)(vetBuckets[i].get(posItem))).getChave());
-					
 
-				posItem++;
-			}	
-		}
-			return colisao.size();
-		
-		}		
->>>>>>> refs/remotes/origin/master
 	
 	public void imprimeLista() {
 		int posItem = 0;

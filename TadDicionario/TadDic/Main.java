@@ -13,7 +13,7 @@ public class Main {
 		dic.insertItem("moranog", new RegDados("morango","strawberry"));
 		System.out.println("AS CHAVES SÃOO: " + dic.keys());
 	
-		System.out.println("Existe colisão ?" + dic.GetColisao());
+		System.out.println("Existe colisão ?" + dic.getColisoes());
 		
 		dic.insertItem("banana", new RegDados("banana","banana"));
 		System.out.println(dic.size());
