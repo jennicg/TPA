@@ -9,14 +9,16 @@ public class Main {
 	    public static void main(String[] args) throws FileNotFoundException {
 
 	    	lstPalavras = new ArrayList<>();
-	        lerOsAtletas();
+	    	lerDicionario();
 
 	        System.out.println("Tamanho da lista " + lstPalavras.size());
-
+	        for (String i : lstPalavras) {
+	            System.out.println("linha.: " + i);
+	        }
 	        
 	    }
 
-	    public static void lerOsAtletas() throws FileNotFoundException {
+	    public static void lerDicionario() throws FileNotFoundException {
 
 	        FileReader arq = new FileReader("C:\\Users\\jenny\\OneDrive\\Documentos\\Ed\\eng-pt.txt");
 
