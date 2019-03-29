@@ -148,6 +148,19 @@ public class TadDicChain {
 		return entradas;
 	}
 	
+
+	public int[] getColisoes() {
+			int[] colisoes = new int[vetBuckets.length];
+			for(int i = 0; i< this.vetBuckets.length; i++) {
+				if(this.vetBuckets[i].size() > 1) {
+					colisoes[i] = vetBuckets[i].size()-1;
+				}
+				else {
+					colisoes[i] = this.vetBuckets[i].size();
+				}
+			}
+			return colisoes;
+		}
 	
 	public void imprimeLista() {
 		int posItem = 0;
@@ -163,6 +176,7 @@ public class TadDicChain {
 			}	 
 		}		
 	}
+
 	
 	
 }
