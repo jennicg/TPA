@@ -2,6 +2,10 @@ package TadDic;
 
 import java.util.LinkedList;
 
+import org.jfree.data.category.DefaultCategoryDataset;
+
+DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+dataset.getColumnKeys()
 /**
  * @author jenni
  *
