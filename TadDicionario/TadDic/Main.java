@@ -25,8 +25,8 @@ public class Main {
 	        Scanner bufferedScanner = new Scanner(new BufferedReader(arq));
 	        try {
 	            while (bufferedScanner.hasNextLine()) {
-	                String linhaCurrente = bufferedScanner.nextLine();
-	                Scanner linhaScanner = new Scanner(linhaCurrente);
+	                String linhaAtual = bufferedScanner.nextLine();
+	                Scanner linhaScanner = new Scanner(linhaAtual);
 	                linhaScanner.useDelimiter(",");
 	                lstPalavras.add((linhaScanner.next()));
 	                linhaScanner.close();
