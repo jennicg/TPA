@@ -151,13 +151,15 @@ public class TadDicChain {
 
 	public int[] getColisoes() {
 			int[] colisoes = new int[vetBuckets.length];
-			for(int i = 0; i< this.vetBuckets.length; i++) {
-				if(this.vetBuckets[i].size() > 1) {
-					colisoes[i] = vetBuckets[i].size()-1;
+			int pos = 0;
+			while( pos< this.vetBuckets.length) {
+				if(this.vetBuckets[pos].size() > 1) {
+					colisoes[pos] = vetBuckets[pos].size()-1;
 				}
 				else {
-					colisoes[i] = this.vetBuckets[i].size();
+					colisoes[pos] = this.vetBuckets[pos].size();
 				}
+				pos++;
 			}
 			return colisoes;
 		}
