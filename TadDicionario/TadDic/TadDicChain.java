@@ -48,6 +48,23 @@ public class TadDicChain {
 		return soma;	
 	}
 	
+	private long Hash_poli(String str ){
+	    long total=0;
+	    double mathIt=0;
+	    int size = str.length();
+	    for(int j = 0 ; j< size ; j++){
+	        double coef =  (double) str.charAt(j); 
+	        double base = (int) Math.pow(31, (size-j))*coef;
+	        mathIt = mathIt + base  ;      
+
+	        }
+	    total =(int) mathIt %vetBuckets.length;
+	    return total; 
+
+	}
+	
+	
+	
 	private int buscaItem (LinkedList<DicItem> lst, String k) {
 		int pos = 0;
 		while (pos < lst.size()) {
