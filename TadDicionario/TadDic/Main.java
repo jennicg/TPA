@@ -7,6 +7,8 @@ public class Main {
 	  static List<String> lstPalavras;
 
 	    public static void main(String[] args) throws FileNotFoundException {
+			
+	    	
 
 	    	lstPalavras = new ArrayList<>();
 	    	lerDicionario();
@@ -15,8 +17,9 @@ public class Main {
 	        for (String i : lstPalavras) {
 	            System.out.println("linha.: " + i);
 	        }
-	        
+
 	    }
+
 
 	    public static void lerDicionario() throws FileNotFoundException {
 
@@ -42,7 +45,7 @@ public class Main {
 	        }
 	    }
 	
-	  
+
 
 	
 }

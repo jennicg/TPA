@@ -193,10 +193,11 @@ public class TadDicChain {
 		} catch (IOException io) {
 			System.out.println("Deu ruim..."+ io.getMessage());
 
-		}
+		
 		System.out.println("GRAFICO CRIADO!...");
 
 	}
+		}
 		
 		
 
