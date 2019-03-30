@@ -179,7 +179,7 @@ public class TadDicChain {
 		int pos = 0;
 		while (pos < colisoes.length) {
 			
-		dataset.addValue(colisoes[pos], "pos", String.valueOf(pos));
+		dataset.addValue(colisoes[pos], String.valueOf(colisoes[pos]), String.valueOf(pos));
 		
 		pos++;
 		}
