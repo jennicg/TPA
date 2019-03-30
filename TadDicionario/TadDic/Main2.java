@@ -1,7 +1,22 @@
 package TadDic;
 
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
+
+import org.jfree.*;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
+
+
 public class Main2 {
 	public static void main (String[] args) {
+	
 		TadDicChain dic = new TadDicChain (256);
 		System.out.println("O dicionario esta vazio ?" + dic.isEmpty());
 		System.out.println ("Avengers");
@@ -12,6 +27,9 @@ public class Main2 {
 		dic.insertItem("Yasmim", new EstudanteBsi("Yasmim","0803",22));
 
 		System.out.println("COLISÕES " + dic.getColisoes());
+		int [] colisoes = dic.getColisoes();
+		
+		dic.exibeDiagrama(colisoes);
 		
 
 

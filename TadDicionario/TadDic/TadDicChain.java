@@ -1,6 +1,14 @@
 package TadDic;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.LinkedList;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  * @author jenni
@@ -164,7 +172,33 @@ public class TadDicChain {
 		}
 		return entradas;
 	}
+	
+	public void exibeDiagrama (int[] colisoes) {
+		colisoes =getColisoes();
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		int pos = 0;
+		while (pos < colisoes.length) {
+			
+		dataset.addValue(colisoes[pos], "pos", String.valueOf(pos));
+		
+		pos++;
+		}
+		JFreeChart criaGrafico = ChartFactory.createBarChart("Grafico Dicionario", "pos Vetor Buckets", "colisoes", dataset);
+		
+		try {
+			System.out.println("Criando o grafico...");
+			OutputStream png = new FileOutputStream("GraficoTeste.png");
+			ChartUtilities.writeChartAsPNG(png,criaGrafico,500,400);
+			png.close();
+		} catch (IOException io) {
+			System.out.println("Deu ruim..."+ io.getMessage());
 
+		}
+		System.out.println("GRAFICO CRIADO!...");
+
+	}
+		
+		
 
 	public int[] getColisoes() {
 			int[] colisoes = new int[vetBuckets.length];
