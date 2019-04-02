@@ -213,7 +213,14 @@ public class TadDicChain {
 		return (quant_entradas == 0);
 		}
 	
-	
+	 private void resize(int max) {
+		 LinkedList[] temp;
+	      temp = (LinkedList[]) new Object[max];
+	      for (int i = 0; i < vetBuckets.length; i++)
+	         temp[i] = vetBuckets[i];
+	      vetBuckets= temp;
+	   }
+	 
 	public LinkedList<Object> keys(){
 		int posItem = 0;
 		if(isEmpty())
