@@ -1,7 +1,10 @@
 package TadDic;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.LinkedList;
 
@@ -15,6 +18,39 @@ import org.jfree.data.category.DefaultCategoryDataset;
  *
  */
 
+class HashEngineDefault extends Hash_engine {
+		public long hash_func (Object k) {
+			long soma = 0;
+			//Converte o objeto chave k em um array de bytes
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ObjectOutput out = null;
+			byte [] vetBytes = null;
+			try {
+				try {
+					out = new ObjectOutputStream(bos);
+					out.writeObject(k);
+					out.flush();
+					vetBytes = bos.toByteArray();
+				} catch (IOException e) {
+					e.printStackTrace();
+					}
+				}
+				finally {
+					try {
+						bos.close();
+					} catch (IOException e) {
+						
+					}
+				
+			}
+			
+			for (int i = 0; i < vetBytes.length; i++)
+				soma = soma + (int)vetBytes[i];
+			return soma;
+			
+		}
+}
+
 public class TadDicChain {
 
 	/**
@@ -23,8 +59,20 @@ public class TadDicChain {
 	private LinkedList [] vetBuckets;
 	private double fator_carga = 0.75;
 	private int quant_entradas = 0;
+	private Hash_engine he = null;
 	
 	public TadDicChain(int quant_entradas) {
+		// TODO Auto-generated constructor stub
+		int tam = (int)(quant_entradas/fator_carga);
+		vetBuckets = new LinkedList [tam];
+		
+		for(int i = 0; i< tam; i++) {
+			vetBuckets[i] = new LinkedList <DicItem>(); // DicItem
+			
+		}
+	}
+	
+	public TadDicChain(Hash_engine he) {
 		// TODO Auto-generated constructor stub
 		int tam = (int)(quant_entradas/fator_carga);
 		vetBuckets = new LinkedList [tam];
@@ -47,13 +95,36 @@ public class TadDicChain {
 		return vetBuckets.length;
 	}
 	
-	// Funçao para converter para hash
-	private long hash_func (String txt) {
+	
+	private long hash_func (Object k) {
 		long soma = 0;
+		//Converte o objeto chave k em um array de bytes
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ObjectOutput out = null;
+		byte [] vetBytes = null;
+		try {
+			try {
+				out = new ObjectOutputStream(bos);
+				out.writeObject(k);
+				out.flush();
+				vetBytes = bos.toByteArray();
+			} catch (IOException e) {
+				e.printStackTrace();
+				}
+			}
+			finally {
+				try {
+					bos.close();
+				} catch (IOException e) {
+					
+				}
+			
+		}
 		
-		for(int i = 0; i < txt.length(); i++)
-			soma = soma + (int)txt.charAt(i);
-		return soma;	
+		for (int i = 0; i < vetBytes.length; i++)
+			soma = soma + (int)vetBytes[i];
+		return soma;
+		
 	}
 	
 	private long Hash_poli(String str ){
@@ -73,7 +144,7 @@ public class TadDicChain {
 	
 	
 	
-	private int buscaItem (LinkedList<DicItem> lst, String k) {
+	private int buscaItem (LinkedList<DicItem> lst, Object k) {
 		int pos = 0;
 		while (pos < lst.size()) {
 			if(((DicItem)(lst.get(pos))).getChave().equals(k))
@@ -84,7 +155,7 @@ public class TadDicChain {
 	}
 	
 	
-	public void insertItem(String k, Object e) {
+	public void insertItem(Object k, Object e) {
 		Object aux = findElement(k);
 		long cod_hash = hash_func(k);
 		int posList =0;
@@ -108,7 +179,7 @@ public class TadDicChain {
 	}
 
 	
-	public Object removeElement(String k) {
+	public Object removeElement(Object k) {
 		Object aux = findElement(k);
 		 long cod_hash = hash_func(k);
 		 int indice = (int)cod_hash % vetBuckets.length; // utilizar o resto para não exceder o tamanho	
@@ -122,13 +193,13 @@ public class TadDicChain {
 			return aux;
 	    }
 	
-	public Object findElement (String k) {
+	public Object findElement (Object k) {
 		long cod_hash = hash_func(k);
 		int indice = (int)cod_hash % vetBuckets.length;
 		
 		int posList =0;
 		while(posList < vetBuckets[indice].size()) {
-			if (((DicItem)(vetBuckets[indice].get(posList))).getChave().equalsIgnoreCase(k))
+			if (((DicItem)(vetBuckets[indice].get(posList))).getChave().equals(k))
 				return ((DicItem)vetBuckets[indice].get(posList)).getValor();
 			posList++;		
 		}
@@ -143,11 +214,11 @@ public class TadDicChain {
 		}
 	
 	
-	public LinkedList<String> keys(){
+	public LinkedList<Object> keys(){
 		int posItem = 0;
 		if(isEmpty())
 			return null;
-		LinkedList<String> entradas = new LinkedList<String>();		
+		LinkedList<Object> entradas = new LinkedList<Object>();		
 		for(int i = 0; i < vetBuckets.length; i++) {
 			posItem = 0;
 			while (posItem < vetBuckets[i].size()) {

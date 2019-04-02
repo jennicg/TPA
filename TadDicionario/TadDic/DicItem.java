@@ -1,12 +1,12 @@
 package TadDic;
 
 public class DicItem {
-	  public String chave;
-	  public String getChave() {
+	  public Object chave;
+	  public  Object getChave() {
 		return chave;
 	}
 
-	public void setChave(String chave) {
+	public void setChave(Object chave) {
 		this.chave = chave;
 	}
 
@@ -20,7 +20,7 @@ public class DicItem {
 
 	public Object valor;
 	    
-	    public DicItem (String chave, Object valor) {
+	    public DicItem (Object chave, Object valor) {
 	        this.chave = chave;
 	        this.valor = valor;
 	    }
