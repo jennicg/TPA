@@ -29,7 +29,7 @@ public class Main2 {
 
 		dic.imprimeLista();
 		dic.removeElement("eduarda");
-		EstudanteBsi dado = (EstudanteBsi)dic.findElement("jennifer");		
+		EstudanteBsi dado = (EstudanteBsi)dic.findElement("eduarda");		
 		if (dado!= null)
 			System.out.println(dado.getNome() + ", " + dado.getIdade());
 		else
