@@ -36,6 +36,8 @@ public class TadDicChain {
 		for(int i = 0; i< tam; i++) {
 			vetBuckets[i] = new LinkedList <DicItem>(); // DicItem
 			
+		he = new HashEngineDefault();
+			
 		}
 	}
 	
@@ -46,6 +48,11 @@ public class TadDicChain {
 		
 		for(int i = 0; i< tam; i++) {
 			vetBuckets[i] = new LinkedList <DicItem>(); // DicItem
+		
+		if(he==null)
+			he = new HashEngineDefault();
+		else
+			this.he = he;
 			
 		}
 	}
@@ -56,6 +63,8 @@ public class TadDicChain {
 		
 		for(int i=0;i <tam;i++)
 			vetBuckets[i] = new LinkedList<DicItem>();
+		
+		he = new HashEngineDefault();
 	}
 	
 	public int getTamVetBuckets() {
