@@ -170,7 +170,6 @@ public class TadDicChain {
 		if(lenMaiorLst() >= (int)vetBuckets.length * 0.3) {
 			resize();
 		}
-		
 		Object aux = findElement(k);
 		long cod_hash = hash_func(k);
 		int posList =0;
