@@ -23,6 +23,7 @@ public class TadDicChain {
 	/**
 	 * 
 	 */
+
 	private LinkedList [] vetBuckets;
 	private double fator_carga = 0.75;
 	private int quant_entradas = 0;
@@ -130,14 +131,54 @@ public class TadDicChain {
 		return -1;
 	}
 	
+	private int lenMaiorLst() {
+		int maior = 0;
+		for(int i = 0; i < vetBuckets.length; i++) {
+			if(vetBuckets[i] != null)
+				if (vetBuckets[i].size() > maior)
+					maior = vetBuckets[i].size();
+		}
+		return maior;
+	}
+	
+	private void resize () {
+		int novoTam = 2 * vetBuckets.length;
+		LinkedList[] novoVetBuckets = new LinkedList[novoTam];
+		
+		for(int i = 0; i < novoTam; i++) {
+			novoVetBuckets[i] = new LinkedList<DicItem>();
+		}
+			
+			//Comecar a mudanca de entrada do old vetBuckets
+			for(int i = 0; i < vetBuckets.length; i++) {
+				if(vetBuckets[i] != null) {
+					for (int k = 0; k < vetBuckets[i].size(); k++) {
+						Object aux = (DicItem)vetBuckets[i].get(k);
+						long cod_hash = ((DicItem)aux).getCod_Hash();
+						int indice = (int)cod_hash % novoVetBuckets.length;
+						novoVetBuckets[indice].add(aux);
+
+				}
+			}
+			
+		}
+		vetBuckets = novoVetBuckets;
+	}
 	
 	public void insertItem(Object k, Object e) {
+		
+		if(lenMaiorLst() >= (int)vetBuckets.length * 0.3) {
+			resize();
+		}
+		
 		Object aux = findElement(k);
 		long cod_hash = hash_func(k);
 		int posList =0;
 		int indice = (int)cod_hash % vetBuckets.length; // utilizar o resto para não exceder o tamanho
 		if (aux == null) {
-			vetBuckets[indice].add(new DicItem(k,e));
+			DicItem dicItem = new DicItem(k,e);
+			dicItem.setCod_Hash(cod_hash);
+			vetBuckets[indice].add(dicItem);
 			quant_entradas++;
 		}
 		else {
@@ -189,13 +230,6 @@ public class TadDicChain {
 		return (quant_entradas == 0);
 		}
 	
-	 private void resize(int max) {
-		 LinkedList[] temp;
-	      temp = (LinkedList[]) new Object[max];
-	      for (int i = 0; i < vetBuckets.length; i++)
-	         temp[i] = vetBuckets[i];
-	      vetBuckets= temp;
-	   }
 	 
 	public LinkedList<Object> keys(){
 		int posItem = 0;

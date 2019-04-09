@@ -19,10 +19,20 @@ public class DicItem {
 	}
 
 	public Object valor;
+	public long cod_hash;
+	
+	public void setCod_Hash(long cod_hash) {
+		this.cod_hash = cod_hash;
+	}
+	
+	public long getCod_Hash() {
+		return cod_hash;
+	}
 	    
 	    public DicItem (Object chave, Object valor) {
 	        this.chave = chave;
 	        this.valor = valor;
+	       
 	    }
 
 }
