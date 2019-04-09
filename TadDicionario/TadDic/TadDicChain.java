@@ -157,7 +157,6 @@ public class TadDicChain {
 						long cod_hash = ((DicItem)aux).getCod_Hash();
 						int indice = (int)cod_hash % novoVetBuckets.length;
 						novoVetBuckets[indice].add(aux);
-
 				}
 			}
 			
