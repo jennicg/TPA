@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.util.LinkedList;
 
 import org.jfree.chart.ChartFactory;
@@ -29,12 +30,13 @@ public class TadDicChain {
 	private int quant_entradas = 0;
 	private Hash_engine he = null;
 	
-	
+	// VARIAVEIS GLOBAIS PARA FUNÇÃO HASH FNV
 	private static final long FNV_64_INIT = 0xcbf29ce484222325L;
     private static final long FNV_64_PRIME = 0x100000001b3L;
 
     private static final int FNV_32_INIT = 0x811c9dc5;
     private static final int FNV_32_PRIME = 0x01000193;
+   // ----------------------- fim do uso das VG
 	
 	public TadDicChain(int quant_entradas) {
 		// TODO Auto-generated constructor stub
@@ -126,54 +128,30 @@ public class TadDicChain {
 
 	}
 	
-	private static int fnv_hash32(final byte[] k) {
-        int rv = FNV_32_INIT;
-        final int len = k.length;
-        for(int i = 0; i < len; i++) {
-            rv ^= k[i];
-            rv *= FNV_32_PRIME;
-        }
-        return rv;
-    }
 
-    private static long fnv_hash64(final byte[] k) {
-        long rv = FNV_64_INIT;
-        final int len = k.length;
-        for(int i = 0; i < len; i++) {
-            rv ^= k[i];
-            rv *= FNV_64_PRIME;
-        }
-        return rv;
-    }
+	private long fnv_hash (String s) {
+		BigInteger h = new BigInteger ("216613621");
+		BigInteger a = new BigInteger ("16777619");
+		
+		for(int i = 0; i < s.length(); i++) {
+			String bigIchar_i = String.valueOf((int)s.charAt(i));
+			h = h.multiply(a).xor(new BigInteger (bigIchar_i));
+			
+			
+		}
+		
+		return Math.abs(h.longValue());
+		
+	}
 
-    private static int fnv_hash32(final String k) {
-        int rv = FNV_32_INIT;
-        final int len = k.length();
-        for(int i = 0; i < len; i++) {
-            rv ^= k.charAt(i);
-            rv *= FNV_32_PRIME;
-        }
-        return rv;
-    }
-
-    private static long fnv_hash64(final String k) {
-        long rv = FNV_64_INIT;
-        final int len = k.length();
-        for(int i = 0; i < len; i++) {
-            rv ^= k.charAt(i);
-            rv *= FNV_64_PRIME;
-        }
-        return rv;
-    }
-
-	
+   
 	private long berstein(String s) {
 		long h = 0;
 		int i;
 		for(i = 0; i < s.length(); i++) {
 			h = 33 * h + (int)s.charAt(i);
 		}
-		return h;
+		return Math.abs((int)h);
 	}
 	
 	private long bersteinM(String s) {
@@ -182,7 +160,7 @@ public class TadDicChain {
 		for(i = 0; i < s.length(); i++) {
 			h = (33 * h) ^(int)s.charAt(i);
 		}
-		return h;
+		return Math.abs((int)h);
 		
 		
 	}
