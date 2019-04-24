@@ -1,6 +1,6 @@
 package TadDic;
 
-public class DicItem {
+public class TDicItem {
 	  public Object chave;
 	  public  Object getChave() {
 		return chave;
@@ -29,7 +29,7 @@ public class DicItem {
 		return cod_hash;
 	}
 	    
-	    public DicItem (Object chave, Object valor) {
+	    public TDicItem (Object chave, Object valor) {
 	        this.chave = chave;
 	        this.valor = valor;
 	       
