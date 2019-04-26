@@ -48,7 +48,7 @@ public class TADDicChain {
 	
 	public TADDicChain(Hash_engine he) {
 		// TODO Auto-generated constructor stub
-		int tam = (int)(quant_entradas/fator_carga);
+		int tam = 256;
 		vetBuckets = new LinkedList [tam];
 		
 		for(int i = 0; i< tam; i++) {
@@ -133,7 +133,7 @@ public class TADDicChain {
 		return maior;
 	}
 	
-	private void resize () {
+	private void redimensiona () {
 		int novoTam = 2 * vetBuckets.length;
 		LinkedList[] novoVetBuckets = new LinkedList[novoTam];
 		
@@ -161,7 +161,7 @@ public class TADDicChain {
 	public void insertItem(Object k, Object e) {
 		
 		if(lenMaiorLst() >= (int)vetBuckets.length * 0.3) {
-			resize();
+			redimensiona();
 		}
 		Object aux = findElement(k);
 		long cod_hash = hash_func(k);
@@ -171,6 +171,7 @@ public class TADDicChain {
 			TDicItem dicItem = new TDicItem(k,e);
 			dicItem.setCod_Hash(cod_hash);
 			vetBuckets[indice].add(dicItem);
+			achou = true;
 			quant_entradas++;
 		}
 		else {
@@ -179,6 +180,7 @@ public class TADDicChain {
 			while(posList < vetBuckets[pos].size())
 				((TDicItem)vetBuckets[pos].get(posList)).setValor(e);
 				posList++;
+				achou = true;	
 		}
 
 	}
@@ -190,6 +192,10 @@ public class TADDicChain {
 	
 	public Object removeElement(Object k) {
 		Object aux = findElement(k);
+		if(NO_SUCH_KEY()) {
+			achou = false;
+			return null;
+		}
 		 long cod_hash = hash_func(k);
 		 int indice = (int)cod_hash % vetBuckets.length; // utilizar o resto para não exceder o tamanho	
 			if (aux == null)
@@ -245,8 +251,7 @@ public class TADDicChain {
 	public int getSizeVetBuckets() {
 		return vetBuckets.length;
 	}
-	
-	public long Hash_poli(String str ){
+		public long Hash_poli(String str ){
 	    long total=0;
 	    double mathIt=0;
 	    int size = str.length();

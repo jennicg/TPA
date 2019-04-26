@@ -1,6 +1,4 @@
 package TadDic;
-
-import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -56,7 +54,8 @@ public class DicBenchmark {
 	public static void main(String[] args) {
 		int TAM_TESTE = 50000;
 		TADDicChain dicA = new TADDicChain();
-		FileReader arqIn = new FileReader("C:\\Users\\jenny\\OneDrive\\Documentos\\Ed\\maladireta.csv");
+
+		ArquivoTxt arqIn = ArquivoTxt.open("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\TadDicionario\\TadDic\\maladireta.csv", "rt");
 		
 		HashMap<Object, Object> hm = new HashMap<Object, Object>();
 		
