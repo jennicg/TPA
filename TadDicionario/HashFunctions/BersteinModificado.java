@@ -1,6 +1,8 @@
 package HashFunctions;
 
-public class BersteinModificado {
+import TadDic.Hash_engine;
+
+public class BersteinModificado extends Hash_engine{
 	public long bersteinM(String s) {
 		long h = 0;
 		int i;
@@ -10,6 +12,12 @@ public class BersteinModificado {
 		return Math.abs((int)h);
 		
 		
+	}
+
+	@Override
+	public long hash_func(Object k) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
