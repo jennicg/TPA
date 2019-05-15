@@ -141,7 +141,7 @@ public class TADGrafo {
 						break;
 					}
 			if(v == ultimoVertex)
-				for (int i = primeiroVertex; i <= ultimoVertex; i++)
+				for (int i = ultimoVertex; i >= primeiroVertex; i--)
 					if(!lstDeletados.contains(i)) {
 						ultimoVertex = i;
 						break;
