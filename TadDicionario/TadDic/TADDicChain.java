@@ -157,7 +157,7 @@ public class TADDicChain {
 	}
 	
 	
-	
+	/*
 	public void insertItem(Object k, Object e) {
 		
 		if(lenMaiorLst() >= (int)vetBuckets.length * 0.3) {
@@ -184,6 +184,32 @@ public class TADDicChain {
 		}
 
 	}
+	*/
+	
+	public void insertItem(Object chave, Object valor) {
+        if(lenMaiorLst() >= (int)getSizeVetBuckets() * 0.30) {
+            
+            redimensiona();
+           
+        }
+        
+      
+        long cod_hash = hash_func(chave);
+		int indice = (int)cod_hash % vetBuckets.length; 
+        
+        if(NO_SUCH_KEY()) {
+            TDicItem dicItem = new TDicItem(chave, valor);
+            dicItem.setCod_Hash(cod_hash);
+            vetBuckets[indice].add(dicItem);
+            quant_entradas++;
+        }
+        else {
+            int pos = buscaItem(vetBuckets[indice], chave);
+            if(pos != -1) {
+                ((TDicItem)(vetBuckets[indice].get(pos))).setValor(valor);
+            }
+        } 
+    }
 	
 	public int size() {
 		return quant_entradas;
@@ -208,6 +234,7 @@ public class TADDicChain {
 			return aux;
 	    }
 	
+	/*
 	public Object findElement (Object k) {
 		long cod_hash = hash_func(k);
 		int indice = (int)cod_hash % vetBuckets.length;
@@ -222,6 +249,25 @@ public class TADDicChain {
 		return null;
 		
 	}
+	*/
+	
+	 public Object findElement(Object chave) {
+		 long cod_hash = hash_func(chave);
+		int indice = (int)cod_hash % vetBuckets.length;
+       
+       int posList = 0;
+       while(posList < vetBuckets[indice].size()) {
+           if(((TDicItem)vetBuckets[indice].get(posList)).getChave().equals(chave)) {
+               achou = true;
+               return ((TDicItem)(vetBuckets[indice].get(posList))).getValor();
+           }
+               
+           posList++;
+       }
+       
+       achou = false;
+       return null;
+   }
 	
 
 	public boolean isEmpty() {

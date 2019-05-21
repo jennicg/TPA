@@ -47,6 +47,10 @@ public class TADGrafo {
 		return quantEdges;
 	}
 	
+	public String getNome() {
+		return nome;
+	}
+	
 	private boolean vertexOk (int v) {
 		if(( v>= primeiroVertex) && (v <= ultimoVertex) && !lstDeletados.contains(v))
 			return true;
@@ -78,10 +82,27 @@ public class TADGrafo {
 		return lst;
 	}
 		
-	public Integer getEdge (int u, int v) {
-		if (vertexOk(v) && vertexOk(u))
-			return mat[u][v];
-		return null;	
+	public Edge getEdge (String u, String v) {
+		Vertex oV = (Vertex)dicLblVertex.findElement(v);
+		if(dicLblVertex.NO_SUCH_KEY())
+			return null;
+		
+		Vertex oU = (Vertex)dicLblVertex.findElement(u);
+		if(dicLblVertex.NO_SUCH_KEY())
+			return null;
+		
+		int idE = mat[oU.getId()][oV.getId()];
+		if(idE == 0)
+			return null;
+		else {
+			LinkedList<Object> lstEs = dicLblEdge.keys();
+			for(int i = 0; i < lstEs.size(); i++) {
+				Edge oE = (Edge)dicLblEdge.findElement(lstEs.get(i));
+				if(oU.getId() == idE)
+					return oE;
+			}
+		}
+		return null;
 	}
 	
 	public int[] endVertices(int e) {
@@ -106,20 +127,34 @@ public class TADGrafo {
 		return 0;
 	}
 	
-	public int outDegree(int v) {
-		int grau = 0;
-		for(int i = primeiroVertex; i < ultimoVertex;i++)
-			if(mat[v][i] != 0 )
-				grau++;
-		return grau;
-	}
 	
-	public int inDegree(int v) {
-		int grau = 0;
-		for(int i = primeiroVertex; i < ultimoVertex;i++)
-			if(mat[i][v] != 0 )
-				grau++;
-		return grau;
+	public Integer outDegree(String label) {
+		Vertex v = (Vertex)dicLblVertex.findElement(label);
+		if(dicLblVertex.NO_SUCH_KEY())
+			return null;
+		else {
+			int linha = v.getId();
+			int grau = 0;
+			for(int i = primeiroVertex; i <= ultimoVertex;i++)
+				if((mat[linha][i] != 0) && !lstDeletados.contains(i))
+					grau++;
+			return grau;
+				
+		}
+	}
+		
+	public Integer inDegree(String label) {
+		Vertex v = (Vertex)dicLblVertex.findElement(label);
+		if(dicLblVertex.NO_SUCH_KEY())
+			return null;
+		else {
+			int linha = v.getId();
+			int grau = 0;
+			for(int i = primeiroVertex; i <= ultimoVertex;i++)
+				if((mat[i][linha] != 0) && !lstDeletados.contains(i))
+					grau++;
+			return grau;
+		}
 	}
 	
 	public int[] outgoingEdges(int v) {
@@ -168,45 +203,60 @@ public class TADGrafo {
 		return -1;
 	}
 	
-	public void removeEdge(int e) {
-		for (int i = primeiroVertex; i < ultimoVertex;i++) {
-			for (int j = primeiroVertex; j<ultimoVertex;j++) {
-				if(mat[i][j] == e) {
-					mat[i][j] = 0;
-					quantEdges--;
-				}
-			}
-	}
+	
+	
+	public Object removeEdge(String e) {
+		Edge eE = (Edge)dicLblEdge.findElement(e);
+		if(dicLblEdge.NO_SUCH_KEY())
+			return null;
+		
+		int idE = eE.getId();
+		
+		for (int i = primeiroVertex; i <=ultimoVertex; i++ ) {
+			if(!lstDeletados.contains(i))
+				for(int j = primeiroVertex; j <= ultimoVertex;j++)
+					if(!lstDeletados.contains(j))
+						if(mat[i][j] == idE) {
+							mat[i][j] = 0; // zerar faz parte da deleção
+							quantEdges--;
+							dicLblEdge.removeElement(e);
+							return eE.getDado();
+						}
+		}
+		return null;
 
 	}
 	
-	/*
+	
 	public Vertex insertVertex(String label, Object o) {
-		int id;
-		if(lstDeletados.size() > 0)
-			id = lstDeletados.removeFirst();
-		else
-			id = geraIDvertex++;
-		if(id > ultimoVertex)
-			ultimoVertex = id;
-		if (id < primeiroVertex)
-			primeiroVertex = id;
-		
-		Vertex v = (Vertex)dicLblVertex.findElement(label);
-		//Inclusão de um vértice novo
-		if(dicLblVertex.NO_SUCH_KEY()) {
-			v = new Vertex(label,o);
-			v.setId(id);
-			dicLblVertex.insertItem(label, v);
-			quantVertex++;
-		}
-		else
-			v.setDado(o);
-		
-		return v;
+		 int idV = geraIDvertex++;
+        
+        if(idV > ultimoVertex){
+            ultimoVertex = idV;
+        }
+        if(idV < primeiroVertex){
+            primeiroVertex = idV;
+        }
+        
+        
+        Vertex V = (Vertex)dicLblVertex.findElement(label);
+        if(dicLblVertex.NO_SUCH_KEY()){
+            V = new Vertex(label, o);
+            V.setId(idV);
+            dicLblVertex.insertItem(label,V);
+            quantVertex++;
+        }
+        else{
+            V.setDado(o);
+        }
+        
+        return V;
+    }
 			
-	}
-	*/
+	
+	
+	
+	/*
 	public int insertVertex() {
 		int id;
 		if(lstDeletados.size() > 0)
@@ -223,47 +273,56 @@ public class TADGrafo {
 		return id;
 			
 	}
-	public Integer removeVertex (int v) {
-		if(vertexOk(v)) {
-			lstDeletados.add(v);
-			if(v == primeiroVertex)
+	*/
+	public Object removeVertex (String label) {
+		Vertex v = (Vertex)dicLblVertex.findElement(label);
+		if(dicLblVertex.NO_SUCH_KEY())
+			return null;
+		
+		int id = v.getId();
+		
+			if(id == primeiroVertex)
 				for (int i = primeiroVertex +1; i <= ultimoVertex; i++)
 					if(!lstDeletados.contains(i)) {
 						primeiroVertex = i;
 						break;
 					}
-			if(v == ultimoVertex)
+			if(id == ultimoVertex)
 				for (int i = ultimoVertex -1; i >= primeiroVertex; i--)
 					if(!lstDeletados.contains(i)) {
 						ultimoVertex = i;
 						break;
 					}
 			for(int i = primeiroVertex; i<= ultimoVertex; i++ ) {
-				if(mat[v][i] != 0) {
+				if(mat[id][i] != 0) {
 					quantEdges--;
-					mat[v][i] = 0;
+					mat[id][i] = 0;
 	
 				}
-				if((mat[i][v] != 0) && (mat[v][i] != mat[i][v])){
+				if((mat[i][id] != 0) && (mat[id][i] != mat[i][id])){
 					quantEdges--;
-					mat[i][v] = 0;
+					mat[i][id] = 0;
 	
 				}
 				
 			}
 			quantVertex--;
-			return v;
-		}
-		else
-			return null;
+			lstDeletados.add(id);
+			
+		return dicLblVertex.removeElement(label);
 		
 	}
 	
-	public boolean areAdjacent(int u, int v) {
-		if(vertexOk(u) && vertexOk(v))
-			return mat[u][v] != 0;
-		else
+	public boolean areAdjacent(String u, String v) {
+		Vertex vU = (Vertex)dicLblVertex.findElement(u);
+		if(dicLblVertex.NO_SUCH_KEY())
 			return false;
+		
+		Vertex vV = (Vertex)dicLblVertex.findElement(v);
+		if(dicLblVertex.NO_SUCH_KEY())
+			return false;
+		
+		return mat[vU.getId()][vV.getId()] != 0;
 	}
 
 }

@@ -5,11 +5,11 @@ public class Main {
 	public static void main(String[] args) {
 		// Teste 
 		TADGrafo g = new TADGrafo("teste");
-		g.insertVertex();
-		g.insertVertex();
-		g.insertVertex();
-		g.insertVertex();
-		g.insertVertex();
+		g.insertVertex("A",1);
+		g.insertVertex("B",2);
+		g.insertVertex("C",3);
+		g.insertVertex("D",4);
+		//g.insertVertex("E");
 		
 		g.insertEdge(0, 1);
 		g.insertEdge(0, 2);
@@ -25,7 +25,7 @@ public class Main {
 		System.out.println(g.numEdges());
 		System.out.println();
 		
-		g.removeVertex(2);
+		g.removeVertex("A");
 		
 		g.printmat();
 		System.out.println(g.numVertices());
