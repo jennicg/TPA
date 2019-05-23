@@ -5,7 +5,7 @@ public class Main {
 	public static void main(String[] args) {
 		// Teste 
 		TADGrafo g = new TADGrafo("teste");
-		g.insertVertex("A",1);
+		g.insertVertex("A",null);
 		g.insertVertex("B",2);
 		g.insertVertex("C",3);
 		g.insertVertex("D",4);
@@ -32,7 +32,7 @@ public class Main {
 		System.out.println(g.numEdges());
 		System.out.println();
 		
-
+		g.insertVertex("A",null);
 		g.printmat();
 		System.out.println(g.numVertices());
 		System.out.println(g.numEdges());

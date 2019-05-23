@@ -57,29 +57,40 @@ public class TADGrafo {
 		return false;
 			}
 	
-	public int[] vertices() {
-		int[] lst = new int[this.mat[0].length];
-		for (int i = primeiroVertex; i <= ultimoVertex; i++) {
-			if(!lstDeletados.contains(i)) {
-				lst[i] = mat[i][0];
+	public Vertex[] vertices() {
+		Vertex[] lst = new Vertex[quantVertex];
+		LinkedList<Object> v = dicLblVertex.elements();
+		for (int i = 0; i < v.size(); i++) {
+			lst[i] = (Vertex)v.get(i);
 			}
-		}
+		
 		return lst;
 	}
 
-	public int[] edges() {
-		int [] lst = new int[quantEdges];
+	public Edge[] edges() {
+		Edge [] lst = new Edge[quantEdges];
+		LinkedList<Object> e = dicLblEdge.elements();
 		int pos = 0;
-		for (int i = primeiroVertex;  i <= ultimoVertex;  i++) {
-			if(!lstDeletados.contains(i)) {
-				for (int j = primeiroVertex; j<= ultimoVertex;j++) {
-					if(!lstDeletados.contains(j))
-					lst[pos] = mat[i][j];
-					pos++;
-				}
-			}
+		for (int i = 0;  i < e.size();  i++) {
+			Edge aux = (Edge)e.get(i);
+			if(!VerificaEdge(lst,aux.getLabel()))
+				lst[pos] = aux;
+			pos++;
+			
+			
 		}
 		return lst;
+	}
+	
+	private boolean VerificaEdge(Edge[] lst, String label) {
+		for (Edge aux : lst) {
+			if(aux != null && aux.getLabel().equals(label)) {
+				return true;
+			}
+		}
+		return false;
+		
+		
 	}
 		
 	public Edge getEdge (String u, String v) {
@@ -105,6 +116,7 @@ public class TADGrafo {
 		return null;
 	}
 	
+	/*
 	public int[] endVertices(int e) {
 		for (int i = primeiroVertex; i < ultimoVertex;i++) {
 			for (int j = primeiroVertex; j< ultimoVertex;j++) {
@@ -119,12 +131,58 @@ public class TADGrafo {
 		}
 		return null;
 	}
+	*/
 	
-	public int opposite (int v, int e) {
-		for(int i = primeiroVertex; i < ultimoVertex;i++)
-			if(mat[v][i] == e)
-				return i;
-		return 0;
+	public Vertex[] endVertices(String e) {
+		Vertex[] v = new Vertex[2];
+		Vertex oV = (Vertex)dicLblVertex.findElement(e);
+		int id = oV.getId();
+		for (int i = primeiroVertex; i < ultimoVertex;i++) {
+			for (int j = primeiroVertex; j< ultimoVertex;j++) {
+				if(mat[i][j]== id && !lstDeletados.contains(i) && !lstDeletados.contains(j))
+					v[0] = findElementV(i);
+					v[1] = findElementV(j);
+		
+				}
+			
+			}
+		
+			return v;
+		}
+		
+	
+	private Vertex findElementV(int index) {
+		Vertex v = null;
+		for(Object obj : this.dicLblVertex.elements()) {
+			if(((Vertex)obj).getId() == index) {
+				v = (Vertex)obj;
+			}
+		}
+		return v;
+	}
+		
+	
+	
+	public Vertex opposite (String v, String e) {
+		Vertex oV = (Vertex)dicLblVertex.findElement(v);
+		if(dicLblVertex.NO_SUCH_KEY())
+			return null;
+		Edge oE = (Edge)dicLblEdge.findElement(v);
+		if(dicLblEdge.NO_SUCH_KEY())
+			return null;
+		for(int i = primeiroVertex; i <= ultimoVertex;i++)
+			if(!lstDeletados.contains(i) && (mat[oV.getId()][i] == oE.getId())) {
+				LinkedList<Object> lstVs = dicLblVertex.keys();
+				
+				for(int j = 0 ; j< lstVs.size(); j++) {
+					Vertex oU = (Vertex)dicLblVertex.findElement(lstVs.get(j));
+					if(oU.getId() ==i)
+						return oU;
+				}
+						
+			}
+		return null;
+		
 	}
 	
 	
@@ -157,7 +215,8 @@ public class TADGrafo {
 		}
 	}
 	
-	public int[] outgoingEdges(int v) {
+	/*
+	public Edge[] outgoingEdges(int v) {
 		LinkedList<Integer> lst = new LinkedList<Integer>();
 		if(!lstDeletados.contains(v)) {
 			for (int i = primeiroVertex; i <= this.ultimoVertex; i++) {
@@ -193,14 +252,61 @@ public class TADGrafo {
 			return null;
 		}
 	}
-	
-	public int insertEdge(int u, int v) {
-		if(vertexOk(u) && vertexOk(v)) {
-			mat[u][v] = geraIDedge++;
-			quantEdges++;
-			return mat[u][v];
+	*/
+	public Edge[] outGoingEdges(String v) {
+		LinkedList<Integer> lst = new LinkedList<Integer>();
+		Vertex vertex = (Vertex)dicLblVertex.findElement(v);
+		if(!this.lstDeletados.contains(vertex.getId())) {
+			for (int i = primeiroVertex; i <= ultimoVertex; i++) {
+				int aux = mat[vertex.getId()][i];
+				if ( aux != 0  ) {
+					lst.add(aux);
+				}
+			}
 		}
-		return -1;
+		if (lst.size()> 0) {
+			Edge[] e = new Edge[lst.size()];
+			for(int i = 0; i < lst.size(); i++) e[i] = (Edge)dicLblEdge.findElement(lst.get(i));
+			return e;
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public Edge[] incomingEdges(String v) {
+		LinkedList<Integer> lst = new LinkedList<Integer>();
+		Vertex vertex = (Vertex)dicLblVertex.findElement(v);
+		for (int i = primeiroVertex; i<ultimoVertex; i++) {
+			int aux = this.mat[i][vertex.getId()];
+			if ( aux != 0) {
+				lst.add(aux);
+			}
+		}
+		if (lst.size() > 0) {
+			Edge[] e = new Edge[lst.size()];
+			for(int i = 0; i < lst.size(); i++) e[i] = (Edge)dicLblEdge.findElement(lst.get(i));
+			return e;
+		}
+		else {
+			return null;
+		}
+	}
+	
+	public Edge insertEdge(String vu, String vv, String label, Object o) {
+	        Edge e = (Edge)dicLblEdge.findElement(label);
+	        Vertex vA = (Vertex)dicLblVertex.findElement(vu);
+	        Vertex vB = (Vertex)dicLblVertex.findElement(vv);
+	        if(!lstDeletados.contains(vA.getId()) || !lstDeletados.contains(vB.getId()))
+	        		if(dicLblEdge.NO_SUCH_KEY()){
+	    	            e = new Edge(label, o);
+	    	            dicLblEdge.insertItem(label,e);
+	    	            quantEdges++;
+	    	        }
+	    	        else{
+	    	            e.setDado(o);
+	    	        }
+	        return e;
 	}
 	
 	
