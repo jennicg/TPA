@@ -48,13 +48,17 @@ public class Apmattpa {
 		Q.printMatriz();
 		System.out.println();
 		
-		Q.diagP(Q);
-		//Q.diagS(Q);
+	
+		
+		
+		
 		
 		String resultado = Q.salva("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\TadDicionario\\TadDic\\bdmatrizes\\resultado.txt");
 		
 		
-		
+		System.out.println(Q.diagP(Q));
+		System.out.println();
+		System.out.println(Q.diagS(Q));
 		
 		
 		

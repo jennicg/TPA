@@ -230,25 +230,23 @@ public class TADMatriz {
 	}
 	
 	//Diagonal Principal
-	public  void diagP(TADMatriz A) {
+	public  LinkedList<Float> diagP(TADMatriz A) {
 		LinkedList<Float> lst = new LinkedList<Float>();
 		if (A.quantLinhas() == A.quantColunas()) {
 			for(int i = 0; i < A.quantLinhas(); i++) {
 				
 				lst.add(A.getElem(i,i));
-				System.out.println(lst.size());
+				//System.out.println(lst.size());
 			}
 				
 			
-			
 		}
-		for(int i = 0; i< lst.size(); i++)
-			System.out.println(lst.get(i));
+		return lst;
 	}	
 	
 	
 	//Diagonal Secundária		
-	public void diagS(TADMatriz A) {
+	public LinkedList<Float> diagS(TADMatriz A) {
 		LinkedList<Float> lst = new LinkedList<Float>();
 		if (A.quantLinhas() == A.quantColunas()) {
 			int i = A.quantColunas();
@@ -258,7 +256,6 @@ public class TADMatriz {
 			}
 		
 	}
-		for(int i = 0; i< lst.size(); i++)
-		System.out.println(lst.get(i));
+		return lst;
 	}
 }
