@@ -116,7 +116,7 @@ public class TADDicChain {
 	private int buscaItem (LinkedList<TDicItem> lst, Object k) {
 		int pos = 0;
 		while (pos < lst.size()) {
-			if(((TDicItem)(lst.get(pos))).getChave().equals(k))
+			if(((TDicItem)(lst.get(pos))).getKey().equals(k))
 				return pos;
 			pos++;
 		}
@@ -146,7 +146,7 @@ public class TADDicChain {
 				if(vetBuckets[i] != null) {
 					for (int k = 0; k < vetBuckets[i].size(); k++) {
 						Object aux = (TDicItem)vetBuckets[i].get(k);
-						long cod_hash = ((TDicItem)aux).getCod_Hash();
+						long cod_hash = ((TDicItem)aux).getCash_Hash();
 						int indice = (int)cod_hash % novoVetBuckets.length;
 						novoVetBuckets[indice].add(aux);
 				}
@@ -199,14 +199,14 @@ public class TADDicChain {
         
         if(NO_SUCH_KEY()) {
             TDicItem dicItem = new TDicItem(chave, valor);
-            dicItem.setCod_Hash(cod_hash);
+            dicItem.setCash_Hash(cod_hash);
             vetBuckets[indice].add(dicItem);
             quant_entradas++;
         }
         else {
             int pos = buscaItem(vetBuckets[indice], chave);
             if(pos != -1) {
-                ((TDicItem)(vetBuckets[indice].get(pos))).setValor(valor);
+                ((TDicItem)(vetBuckets[indice].get(pos))).setDado(valor);
             }
         } 
     }
@@ -257,9 +257,9 @@ public class TADDicChain {
        
        int posList = 0;
        while(posList < vetBuckets[indice].size()) {
-           if(((TDicItem)vetBuckets[indice].get(posList)).getChave().equals(chave)) {
+           if(((TDicItem)vetBuckets[indice].get(posList)).getKey().equals(chave)) {
                achou = true;
-               return ((TDicItem)(vetBuckets[indice].get(posList))).getValor();
+               return ((TDicItem)(vetBuckets[indice].get(posList))).getDado();
            }
                
            posList++;
@@ -283,7 +283,7 @@ public class TADDicChain {
 		for(int i = 0; i < vetBuckets.length; i++) {
 			posItem = 0;
 			while (posItem < vetBuckets[i].size()) {
-				entradas.add(((TDicItem)(vetBuckets[i].get(posItem))).getChave());
+				entradas.add(((TDicItem)(vetBuckets[i].get(posItem))).getKey());
 				posItem++;
 			}
 		}
@@ -317,8 +317,8 @@ public class TADDicChain {
 		
 		for(int i = 0; i < vetBuckets.length; i++) {
 			for(int k = 0; k < vetBuckets[i].size();k++) {
-				Object chave = ((TDicItem)vetBuckets[i].get(k)).getChave();
-				Object dado = ((TDicItem)vetBuckets[i].get(k)).getValor();
+				Object chave = ((TDicItem)vetBuckets[i].get(k)).getKey();
+				Object dado = ((TDicItem)vetBuckets[i].get(k)).getDado();
 				dicClone.insertItem(chave, dado);
 				
 			}
@@ -330,8 +330,8 @@ public class TADDicChain {
 		if(this.size() == outroDic.size()) {
 			for(int i = 0; i <vetBuckets.length;i++) {
 				for(int k = 0; k < vetBuckets[i].size();k++) {
-					Object chave = ((TDicItem)vetBuckets[i].get(k)).getChave();
-					Object dado = ((TDicItem)vetBuckets[i].get(k)).getValor();
+					Object chave = ((TDicItem)vetBuckets[i].get(k)).getKey();
+					Object dado = ((TDicItem)vetBuckets[i].get(k)).getDado();
 					
 					Object outroDado = outroDic.findElement(chave);
 					if(dado!= outroDado)
@@ -351,11 +351,28 @@ public class TADDicChain {
 		for(int i = 0; i < vetBuckets.length; i++) {
 			posItem = 0;
 			while (posItem < vetBuckets[i].size()) {
-				entradas.add(((TDicItem)(vetBuckets[i].get(posItem))).getValor());
+				entradas.add(((TDicItem)(vetBuckets[i].get(posItem))).getDado());
 				posItem++;
 			}
 		}
 		return entradas;
+	}
+	
+	public LinkedList<Object> getItens(){
+		int posItem = 0;
+		if(isEmpty())
+			return null;
+		LinkedList<Object> itens = new LinkedList<Object>();
+		for(int i = 0; i < vetBuckets.length; i++) {
+			posItem = 0;
+			while (posItem < vetBuckets[i].size()) {
+				Object chave = ((TDicItem)vetBuckets[i].get(posItem)).getKey();
+				if(findElement(chave) != null)
+					itens.add(((TDicItem)(vetBuckets[i].get(posItem))).getDado());
+				posItem++;
+			}
+		}
+		return itens;
 	}
 	
 	public void exibeDiagrama (int[] colisoes) {
@@ -390,7 +407,7 @@ public class TADDicChain {
 			int[] colisoes = new int[vetBuckets.length];
 			int pos = 0;
 			while( pos< this.vetBuckets.length) {
-				if(vetBuckets[pos].size() > 1) {
+				if(vetBuckets[pos].size() >= 1) {
 					colisoes[pos] = vetBuckets[pos].size()-1;
 				}
 				else {
@@ -408,8 +425,8 @@ public class TADDicChain {
 			posItem = 0;
 			while (posItem < vetBuckets[i].size()) {
 				if((TDicItem)vetBuckets[i].get(posItem) != null) {
-					System.out.print(((TDicItem)(vetBuckets[i].get(posItem))).getChave() + ", ");
-					System.out.println(((TDicItem)(vetBuckets[i].get(posItem))).getValor() + ", ");
+					System.out.print(((TDicItem)(vetBuckets[i].get(posItem))).getKey() + ", ");
+					System.out.println(((TDicItem)(vetBuckets[i].get(posItem))).getDado() + ", ");
 					System.out.println(i + ", " + posItem);
 				}
 				posItem++;
