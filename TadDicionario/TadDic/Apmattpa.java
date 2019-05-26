@@ -6,6 +6,7 @@ import _my_tools.ArquivoTxt;
 
 public class Apmattpa {
 	public static void main(String[] args) throws IOException {
+		
 		TADMatriz J = TADMatriz.carrega("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\TadDicionario\\TadDic\\bdmatrizes\\J.txt");
 		TADMatriz A = TADMatriz.carrega("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\TadDicionario\\TadDic\\bdmatrizes\\A.txt");
 		TADMatriz H = TADMatriz.carrega("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\TadDicionario\\TadDic\\bdmatrizes\\H.txt");
@@ -56,9 +57,7 @@ public class Apmattpa {
 		System.out.println(Q.diagP(Q));
 		System.out.println();
 		System.out.println(Q.diagS(Q));
-		
-		
-		
+	
 	
 		
 }

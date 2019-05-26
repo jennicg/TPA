@@ -41,7 +41,7 @@ public class TADMatriz {
 		String chave = i+","+j;
 		Float dado = (Float)this.dicA.findElement(chave);
 		if(dado == null) {
-			return (float)0;
+			return (float)0.0;
 		}
 		else {
 			return dado;
@@ -60,10 +60,18 @@ public class TADMatriz {
 			return null;
 		}
 		String chave = i+","+j;
-	
-		this.dicA.insertItem(chave, valor);
-		
+		if (valor != 0.0) {
+			this.dicA.insertItem(chave, valor);
+			return valor;
+		}
+		else {
+			
+			this.dicA.insertItem(chave, null);
+			
+		}
+			
 		return valor;
+
 	}
 
 	
