@@ -140,18 +140,33 @@ public class TADMatriz {
 	/*
 	 * retorna uma nova matriz com a transposta da matriz corrente, this.
 	 */
+	/*
 	public TADMatriz transposta() {
 		TADMatriz matriz = new TADMatriz(this.colunas,this.linhas);
-		for(int linha=0;linha<this.quantLinhas();linha++){
+		for(int linha=0;linha<mat.length;linha++){
 			for(int coluna=0;coluna<mat[linha].length;coluna++){
 				if(coluna>linha)
-					matriz.setElem(linha,coluna,(getElem(coluna,linha)));	
+					matriz.setElem(linha,coluna,(getElem(coluna,linha)));
+				else if(coluna==linha)
+					matriz.setElem(linha,coluna,(getElem(linha,coluna)));
+	
+				else
+					matriz.setElem(linha,coluna,(getElem(coluna,linha)));
+					
 			}
 		}
 		return matriz;
 		
 	}
+	*/
 	
+	public TADMatriz transposta() {
+		TADMatriz matriz = new TADMatriz(this.colunas,this.linhas);
+	    for (int i=0;i<mat[0].length;i++)   
+	        for (int j=0;j<mat.length;j++)    
+	        	matriz.setElem(i,j,(getElem(j,i)));  
+	    return  matriz;
+	}
 	/*
 	 * carrega uma matriz a partir de um arquivo texto de nome nome_arq. Retorna uma matriz do
 	tipo TADMatriz preenchida com o conteúdo arquivo. No arquivo, a matriz está 
