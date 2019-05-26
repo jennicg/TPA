@@ -50,8 +50,8 @@ public class Apmattpa {
 		System.out.println(Q.printMatriz());
 		System.out.println();
 		
-		String resultado = Q.salva("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\TadDicionario\\TadDic\\bdmatrizes\\resultado.txt");
-		System.out.println("Arquivo: " + resultado);
+		String resposta = Q.salva("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\TadDicionario\\TadDic\\bdmatrizes\\resposta.txt");
+		System.out.println("Arquivo: " + resposta);
 		
 		System.out.println(Q.diagP(Q));
 		System.out.println();
