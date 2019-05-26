@@ -16,50 +16,57 @@ public class TADMatriz {
 	//Armazenar valores diferentes de zero
 	private int linhas;
     private int colunas;
-    private float [][] mat = null;
+    //private float [][] mat = null;
+    TADDicChain dicA;
     
     //cria um objeto matriz do tipo tad matriz representando uma matriz de dimensões <int linhas> x <int  colunas>.
 	public TADMatriz(int linhas, int colunas) {
 		this.linhas = linhas;
 		this.colunas = colunas;
-		mat = new float[linhas][colunas];
+		dicA = new TADDicChain();
+	}
+	
+	
+	public TADDicChain getDados() {
+		return this.dicA;
 	}
 	
 	/*retorna o elemento número real armazenado na posição i (linha), j (coluna) da matriz. Retorna Null se o
 	elemento não existir (i e j forem valores que extrapolam as dimensões da matriz).
 */
 	public Float getElem(int i, int j) {
-		if (i < this.quantLinhas() && j < this.quantColunas() && i >=0 && j >=0)
-				return mat[i][j];
-		return null;
-
+		if(i > this.quantLinhas() || j > this.quantColunas())  {
+			return null;
+		}
+		String chave = i+","+j;
+		Float dado = (Float)this.dicA.findElement(chave);
+		if(dado == null) {
+			return (float)0;
+		}
+		else {
+			return dado;
+		}
+		
 	}
 	
-	public void printMatriz() {
-        
-        float[][] c = this.mat;
-        
-        for (int i = 0; i < c.length; i++) {
-            for (int j = 0; j < c[i].length; j++) {
-                System.out.printf(c[i][j] + " ");
-            }
-            System.out.println("");
-        }
-    }
 	
 	/*
 	 armazena o elemento valor na posição i (linha), j (coluna) da matriz. Retorna Null se a posição não
 	existir (i e j forem valores que extrapolam as dimensões da matriz). Retorna valor, caso contrário.
 	 */
+	
 	public Float setElem(int i, int j, Float valor) {
-		if (getElem(i,j) != null) {
-			mat[i][j] = valor;
-			return valor;
+		if(i > this.quantLinhas() || j > this.quantColunas()) {
+			return null;
 		}
-		else
-			return null;		
+		String chave = i+","+j;
+	
+		this.dicA.insertItem(chave, valor);
 		
+		return valor;
 	}
+
+	
 	
 	public int quantLinhas() {
 		return linhas;
@@ -74,38 +81,38 @@ public class TADMatriz {
 	 * soma a matriz corrente, this, com a matriz m e retorna uma terceira matriz com o resultado da soma. O
 	método deve usar o conceito matemático de soma de matrizes. Retorna Null se as matrizes não puderem ser somadas.
 	*/
-	public TADMatriz soma(TADMatriz A, TADMatriz B) {
-		if (A.linhas== B.linhas && A.colunas == B.colunas) {
-			TADMatriz matriz = new TADMatriz(A.linhas,B.colunas);
+	public TADMatriz soma(TADMatriz A) {
+		if (A.linhas== this.linhas && A.colunas == this.colunas) {
+			TADMatriz matriz = new TADMatriz(A.linhas,this.colunas);
 			for(int i = 0; i < A.linhas; i++)
 				for(int j = 0; j < A.colunas; j++)
-					matriz.setElem(i,j,(A.getElem(i,j)+B.getElem(i,j))); 
+					matriz.setElem(i,j,(A.getElem(i,j)+this.getElem(i,j))); 
+			return matriz;
+		}
+		return null;
+	}
+	
+	public TADMatriz sub(TADMatriz A) {
+		if (A.linhas== this.linhas && A.colunas == this.colunas) {
+			TADMatriz matriz = new TADMatriz(A.linhas,this.colunas);
+			for(int i = 0; i < A.linhas; i++)
+				for(int j = 0; j < A.colunas; j++)
+					matriz.setElem(i,j,(A.getElem(i,j)-this.getElem(i,j))); 
 			return matriz;
 		}
 		return null;
 	}
 	
 	
-	public TADMatriz sub(TADMatriz A, TADMatriz B) {
-		if (A.quantLinhas()== B.quantLinhas() && A.quantColunas() == B.quantColunas()) {
-			TADMatriz matriz = new TADMatriz(A.linhas,B.colunas);
-			for(int i = 0; i < A.linhas; i++)
-				for(int j = 0; j < A.colunas; j++)
-					matriz.setElem(i,j,(A.getElem(i,j)-B.getElem(i,j))); 
-			return matriz;
-		}
-		return null;
-	}
 	
 	/*
 	 * Altera a matriz corrente, this, multiplicando os seus elementos por k.
 	*/
-	public void vezesK(TADMatriz A, float k) {
-		for(int i = 0; i < A.linhas; i++)
-			for(int j = 0; j < A.colunas; j++)
-				A.setElem(i,j,(A.getElem(i,j)*k)); 
-			
-		
+	public void vezesK( float k) {
+		for(int i = 0; i < this.linhas; i++)
+			for(int j = 0; j < this.colunas; j++)
+				this.setElem(i,j,(this.getElem(i,j)*k)); 
+
 	}
 	
 	/*multiplica a matriz corrente,
@@ -113,18 +120,19 @@ public class TADMatriz {
 	da multiplicação. O método deve usar o conceito matemático de multiplicação
 	de matrizes. Retorna Null se as matrizes não puderem ser multiplicadas.
 */
-	public TADMatriz multi(TADMatriz A, TADMatriz B) {
-		if (A.colunas == B.linhas ) {
+	
+	public TADMatriz multi(TADMatriz A) {
+		if (A.colunas == this.linhas ) {
 			//System.out.println("matriz A");
 			//A.printMatriz();
 			//System.out.println("MATRIZ B");
 			//B.printMatriz();
-			TADMatriz matriz = new TADMatriz(A.linhas,B.colunas);
+			TADMatriz matriz = new TADMatriz(A.linhas,this.colunas);
 			for(int i = 0; i < matriz.linhas; i++) {
 				for(int j = 0; j < matriz.colunas; j++) {
 					float aux = 0;
 					for(int a = 0; a< A.colunas; a++) {
-						aux += A.getElem(i,a) * B.getElem(a,j);
+						aux += A.getElem(i,a) * this.getElem(a,j);
 						//System.out.println(aux);
 					}
 					matriz.setElem(i,j,aux);
@@ -137,36 +145,35 @@ public class TADMatriz {
 		return null;
 	}
 	
+	
+	
+public String printMatriz() {
+		String deposito = "";
+		for(int i = 0; i < this.quantLinhas(); i++) {
+			for(int j = 0; j < this.quantColunas(); j++) {
+				deposito += String.valueOf(this.getElem(i,j)) + "";
+				deposito += '\n';
+				
+			}
+			
+		}
+		return deposito;
+
+}
+	
 	/*
 	 * retorna uma nova matriz com a transposta da matriz corrente, this.
 	 */
-	/*
-	public TADMatriz transposta() {
-		TADMatriz matriz = new TADMatriz(this.colunas,this.linhas);
-		for(int linha=0;linha<mat.length;linha++){
-			for(int coluna=0;coluna<mat[linha].length;coluna++){
-				if(coluna>linha)
-					matriz.setElem(linha,coluna,(getElem(coluna,linha)));
-				else if(coluna==linha)
-					matriz.setElem(linha,coluna,(getElem(linha,coluna)));
-	
-				else
-					matriz.setElem(linha,coluna,(getElem(coluna,linha)));
-					
-			}
-		}
-		return matriz;
-		
-	}
-	*/
 	
 	public TADMatriz transposta() {
 		TADMatriz matriz = new TADMatriz(this.colunas,this.linhas);
-	    for (int i=0;i<mat[0].length;i++)   
-	        for (int j=0;j<mat.length;j++)    
+	    for (int i=0;i<this.colunas;i++)   
+	        for (int j=0;j<this.linhas;j++)    
 	        	matriz.setElem(i,j,(getElem(j,i)));  
 	    return  matriz;
 	}
+	
+	
 	/*
 	 * carrega uma matriz a partir de um arquivo texto de nome nome_arq. Retorna uma matriz do
 	tipo TADMatriz preenchida com o conteúdo arquivo. No arquivo, a matriz está 
@@ -231,7 +238,7 @@ public class TADMatriz {
 		
 		for(int i = 0; i < this.quantLinhas(); i++) {
 			for(int j = 0; j < this.quantColunas();j++) {
-				gravarArq.print(this.mat[i][j] + " ");
+				gravarArq.print(this.getElem(i, j) + " ");
 			}
 			gravarArq.println();
 			

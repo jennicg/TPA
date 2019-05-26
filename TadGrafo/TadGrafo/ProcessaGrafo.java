@@ -16,7 +16,7 @@ public class ProcessaGrafo {
 	}
 	
 	
-
+/*
 	public LinkedList<Vertex> dbfs(String label){
 	 //Busca em largura
 	 LinkedList<Vertex> retorno = new LinkedList<Vertex>();
@@ -49,7 +49,8 @@ public class ProcessaGrafo {
 		System.out.println("\nDepth first search visitation order\n"+ordem);
 		return ordem;
 	}
-	
+	*/
+	/*
 	public LinkedList<Vertex> breadthFirstSearch(Collection<? extends Vertex> startingNode){
 		LinkedList<Vertex>nodeQueue = new LinkedList<Vertex>(); // VER DEPOIS
 		nodeQueue.addAll(startingNode);	
@@ -77,5 +78,5 @@ public class ProcessaGrafo {
 		System.out.println("\nBreadth first search visitation order\n"+nodesInVisitedOrder);
 	}
 	
-	
+	*/
 }
