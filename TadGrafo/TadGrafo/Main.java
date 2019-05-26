@@ -36,6 +36,20 @@ public class Main {
 		g.printmat();
 		System.out.println(g.numVertices());
 		System.out.println(g.numEdges());
+		
+		TADGrafo tadGrafoD = new TADGrafo("IAE MAN");
+        tadGrafoD.insertVertex("A", 1);
+        tadGrafoD.insertVertex("B", 2);
+        tadGrafoD.insertVertex("C", 3);
+        tadGrafoD.insertEdge("A", "B", "ab", 12);
+        tadGrafoD.insertEdge("B", "C", "bc", 23);
+        tadGrafoD.insertEdge("C", "C", "cc", 33);
+        
+        tadGrafoD.printmat();
+        
+        System.out.println("");
+        
+        tadGrafoD.printgrafo();
 	
 
 	}
