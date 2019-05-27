@@ -1,14 +1,11 @@
 package TadGrafo;
 import java.util.ArrayList;
+
+
+
 import java.util.Collections;
 import java.util.LinkedList;
-import TadDic.TADDicChain;
-/*
- * Implementação: grafo simples dirigido usando matriz de adjacências
- */
-
-import TadDic.TADDicChain;
-
+import taddic.TADDicChain;
 public class TADGrafo {
 	private int [][] mat = null;
     private String nome;
