@@ -291,30 +291,17 @@ public class TADMatriz {
 	de matrizes. Retorna Null se as matrizes não puderem ser multiplicadas.
 */
 	
-	public TADMatriz multi(TADMatriz A) {
-		if(this.colunas != A.linhas) {
-			System.out.println("Não foi possível realizar a multiplicação");
-			return null;
-		}
-		else {
-			Float aux = new Float(0);
-			TADMatriz matriz = new TADMatriz(this.linhas, A.quantColunas());
-			for(int i = 0; i < this.colunas; i++) {
-				LinkedList<Float> l1 = this.infoL(i);
-				for(int j = 0; j < this.colunas; j++) {
-					LinkedList<Float> c1 = A.infoC(j);
-					for(int k = 0; k < l1.size(); k++) {
-						aux +=   (l1.get(i) * c1.get(i));
-						
-					}
-					matriz.setElem(i, j, aux);
-					
-					
-				}
-			}
-			return matriz;
-		}
-	}
+	public TADMatriz multi(TADMatriz A){
+        if(this.quantColunas() != A.quantLinhas()) 
+        	return null;
+        TADMatriz matriz = new TADMatriz(this.quantLinhas(), A.quantColunas());
+        for(int i=0; i<this.quantLinhas();i++)
+            for(int j=0;  j<A.quantColunas();j++)
+                for(int aux=0;aux <=this.quantColunas();aux++)
+                	matriz.setElem(i, j, matriz.getElem(i, j) + (this.getElem(i, aux) * A.getElem(aux, j)));
+
+        return matriz;
+    }
 	/*
 	 * retorna uma nova matriz com a transposta da matriz corrente, this.
 	 * linha vira coluna, coluna vira linha
@@ -328,33 +315,6 @@ public class TADMatriz {
 	    return  matriz;
 	}
 	
-		//utilizada na multi
-		private LinkedList<Float> infoL(int l){
-			LinkedList<Float> lst = new LinkedList<Float>();
-			for (int i = 0; i < this.quantColunas(); i++) {
-				String chave = l+","+i;
-				Float dado = (Float)dicA.findElement(chave);
-				if(dado == null) {
-					dado = (float)0;
-					}
-				lst.add(dado);
-			}
-			return lst;
-		}
-		
-		//utilizada na multi
-		private LinkedList<Float> infoC(int c){
-			LinkedList<Float> lst = new LinkedList<Float>();
-			for (int i = 0; i < this.linhas; i++) {
-				String chave = i+","+c;
-				Float dado = (Float)dicA.findElement(chave);
-				if(dado == null) {
-					dado = (float)0;
-					}
-				lst.add(dado);
-			}
-			return lst;
-		}
 		
 
 }
