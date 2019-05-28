@@ -62,6 +62,7 @@ public static void main(String[] args) throws IOException {
 		}
 		resultado = aux;	
 		}
+	
 		String resposta = resultado.salva("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\dicionario\\aplicacao\\bdmatrizes\\resposta.txt");
 		System.out.println("Arquivo está localizado no diretório:  " + resposta);
 		System.out.println();

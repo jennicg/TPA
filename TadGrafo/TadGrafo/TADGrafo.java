@@ -154,14 +154,38 @@ public class TADGrafo {
         return null;
     }
     
-    public int[] endVertices(int e){ //???????????????????????????????????????????????????????????????????????????????????????????????
+    public Vertex intToVertex(int id) {
+    	LinkedList<Object> lst = dicLblVertex.elements();
+    	for(int i = 0; i <lst.size(); i++) {
+    		Vertex v = (Vertex)lst.get(i);
+    		if(id == v.getId())
+    			return v;
+    	}
+    	return null;
+    }
+    
+    
+    public Edge intToEdge (int id) {
+    	LinkedList<Object> lst = dicLblEdge.elements();
+    	for(int i = 0; i< lst.size();i++) {
+    		Edge e = (Edge)lst.get(i);
+    		if(id == e.getId())
+    			return e;
+    	}
+    	return null;
+    }
+    public Vertex[] endVertices(String labelE){ 
+    	Edge oE = (Edge)dicLblEdge.findElement(labelE);
+    	if(dicLblEdge.NO_SUCH_KEY())
+    		return null;
+    	int idE = oE.getId();
         for(int i = primVertice;i<=ultiVertice;i++){
             if(valido(i)){
                 for(int k=primVertice;k<=ultiVertice;k++){
-                    if(mat[i][k] == e){
-                        int[] v = new int[2];
-                        v[0] = i;
-                        v[1] = k;
+                    if(mat[i][k] == idE){
+                        Vertex[] v = new Vertex[2];
+                        v[0] = intToVertex(i);
+                        v[1] = intToVertex(k);
                         return v;
                     }
                 }
@@ -438,8 +462,87 @@ public class TADGrafo {
         }
     }
 
-
+/*
+ * MÉTODOS ESPECÍFICOS PARA GRAFOS DIRIGIDOS
+ */
+    public Vertex destination (String labelE) {
+    	Vertex [] vet = endVertices(labelE);
+    	if(vet!= null)
+    		return vet[1];
+    	else
+    		return null;
+    }
+    
+    public Vertex origin (String labelE) {
+    	Vertex [] vet = endVertices(labelE);
+    	if(vet!= null)
+    		return vet[0];
+    	else
+    		return null;
+    }
+    
+    public LinkedList<Edge> inIncidentEdges (String labelV){
+    	Vertex v = (Vertex)dicLblVertex.findElement(labelV);
+    	if(dicLblVertex.NO_SUCH_KEY())
+    		return null;
+    	LinkedList<Edge> lst = new LinkedList <Edge>();
+    	int id = v.getId();
+    	
+    	for(int k = primVertice; k<= ultiVertice; k++)
+    		if((!lstEliminados.contains(k) && (mat[id][k] != 0)))
+    			lst.add(intToEdge(mat[id][k]));
+    	return lst;
+    }
+    
+    public LinkedList<Edge> outIncidentEdges (String labelV){
+    	Vertex v = (Vertex)dicLblVertex.findElement(labelV);
+    	if(dicLblVertex.NO_SUCH_KEY())
+    		return null;
+    	LinkedList<Edge> lst = new LinkedList <Edge>();
+    	int id = v.getId();
+    	
+    	for(int i = primVertice; i<= ultiVertice; i++)
+    		if((!lstEliminados.contains(i) && (mat[i][id] != 0)))
+    			lst.add(intToEdge(mat[i][id]));
+    	return lst;
+    }
     
     
+    public LinkedList<Vertex> inAdjacentVertices(String labelV){
+    	Vertex v = (Vertex)dicLblVertex.findElement(labelV);
+    	if(dicLblVertex.NO_SUCH_KEY())
+    		return null;
+    	LinkedList<Vertex> lst = new LinkedList<Vertex>();
+    	int id = v.getId();
+    	for(int k = primVertice; k<= ultiVertice; k++)
+    		if(!lstEliminados.contains(k) && (mat[id][k] != 0))
+    			lst.add(intToVertex(k));
+    	return lst;
+    }
+    
+    public LinkedList<Vertex> outAdjacentVertices(String labelV){
+    	Vertex v = (Vertex)dicLblVertex.findElement(labelV);
+    	if(dicLblVertex.NO_SUCH_KEY())
+    		return null;
+    	LinkedList<Vertex> lst = new LinkedList<Vertex>();
+    	int id = v.getId();
+    	for(int k = primVertice; k<= ultiVertice; k++)
+    		if(!lstEliminados.contains(k) && (mat[k][id] != 0))
+    			lst.add(intToVertex(k));
+    	return lst;
+    }
+    
+    public LinkedList<Edge> incidentEdges(String labelV){
+    	LinkedList<Edge> lst = inIncidentEdges(labelV);
+    	lst.addAll(outIncidentEdges(labelV));
+    	return lst;
+    }
+    
+    public LinkedList<Vertex> adjacentVertices(String labelV){
+    	LinkedList<Vertex> lst = inAdjacentVertices(labelV);
+    	lst.addAll(outAdjacentVertices(labelV));
+    	return lst;
+    	
+    }
            
 }

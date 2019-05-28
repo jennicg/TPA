@@ -148,6 +148,24 @@ public class TADMatriz {
 		return null;
 	}
 	
+	/*multiplica a matriz corrente,
+	this, pela matriz m de entrada e retorna uma terceira matriz com o resultado
+	da multiplicação. O método deve usar o conceito matemático de multiplicação
+	de matrizes. Retorna Null se as matrizes não puderem ser multiplicadas.
+*/
+	
+	
+	 public TADMatriz multi(TADMatriz A){
+	        if(this.quantColunas() != A.quantLinhas()) return null;
+	        TADMatriz matriz = new TADMatriz(this.quantLinhas(), A.quantColunas());
+	        for(int i=0; i<this.quantLinhas();i++)
+	            for(int j=0;j<A.quantColunas();j++)
+	                for(int aux =1;aux<=this.quantColunas();aux++)
+	                    matriz.setElem(i, j, matriz.getElem(i, j) + (this.getElem(i, aux) * A.getElem(aux, j)));
+
+	        return matriz;
+	    }
+	 
 	/*
 	 * carrega uma matriz a partir de um arquivo texto de nome nome_arq. Retorna uma matriz do
 	tipo TADMatriz preenchida com o conteúdo arquivo. No arquivo, a matriz está 
@@ -285,23 +303,7 @@ public class TADMatriz {
 
 	}
 	
-	/*multiplica a matriz corrente,
-	this, pela matriz m de entrada e retorna uma terceira matriz com o resultado
-	da multiplicação. O método deve usar o conceito matemático de multiplicação
-	de matrizes. Retorna Null se as matrizes não puderem ser multiplicadas.
-*/
 	
-	public TADMatriz multi(TADMatriz A){
-        if(this.quantColunas() != A.quantLinhas()) 
-        	return null;
-        TADMatriz matriz = new TADMatriz(this.quantLinhas(), A.quantColunas());
-        for(int i=0; i<this.quantLinhas();i++)
-            for(int j=0;  j<A.quantColunas();j++)
-                for(int aux=0;aux <=this.quantColunas();aux++)
-                	matriz.setElem(i, j, matriz.getElem(i, j) + (this.getElem(i, aux) * A.getElem(aux, j)));
-
-        return matriz;
-    }
 	/*
 	 * retorna uma nova matriz com a transposta da matriz corrente, this.
 	 * linha vira coluna, coluna vira linha
