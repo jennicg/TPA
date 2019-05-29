@@ -289,7 +289,7 @@ public class TADMatriz {
 		}
 	
 	// printar matriz como string, utilizada para testes
-	public String printMatriz() {
+	public String printMatrizTeste() {
 			String deposito = "";
 			for(int i = 0; i < this.quantLinhas(); i++) {
 				for(int j = 0; j < this.quantColunas(); j++) {
@@ -303,6 +303,14 @@ public class TADMatriz {
 
 	}
 	
+	public void printMatriz() {
+		for(int i=1; i <= this.linhas;i++){
+            for(int j=1; j <= this.colunas;j++){
+                System.out.print(this.getElem(i, j)+" | ");
+            }
+            System.out.println("");
+		}
+	}
 	
 	/*
 	 * retorna uma nova matriz com a transposta da matriz corrente, this.
