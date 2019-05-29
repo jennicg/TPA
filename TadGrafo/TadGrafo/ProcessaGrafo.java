@@ -16,16 +16,16 @@ public class ProcessaGrafo {
 	}
 	
 	
-/*
+
 	public LinkedList<Vertex> dbfs(String label){
 	 //Busca em largura
 	 LinkedList<Vertex> retorno = new LinkedList<Vertex>();
 	 return retorno;
 	}
-	
-	public LinkedList<Vertex> dfs(Collection<? extends Vertex> label){
+	/*
+	public LinkedList<Vertex> dfs(String labelV){
 		LinkedList<Vertex> aux = new LinkedList<Vertex>();		
-		aux.addAll(label);	
+		aux.add(labelV);	
 		boolean[] visitados = new boolean[ grafo.numEdges() +1];		
 		LinkedList<Vertex> ordem = new LinkedList<Vertex>();	
 		
@@ -36,7 +36,7 @@ public class ProcessaGrafo {
 				visitados[removidos.getId()+1]=true;	
 				aux.add(removidos);	
 				
-				LinkedList<Integer> rowOfNodes = grafo.incomingEdges().get(removidos);	
+				LinkedList<Integer> rowOfNodes = grafo.incomingEdges(labelV).get(removidos);	
 				ListIterator<Integer> iterator = rowOfNodes.listIterator();		
 				while(iterator.hasNext()){			
 					int nodeInColumn = iterator.next();
@@ -49,6 +49,7 @@ public class ProcessaGrafo {
 		System.out.println("\nDepth first search visitation order\n"+ordem);
 		return ordem;
 	}
+	
 	*/
 	/*
 	public LinkedList<Vertex> breadthFirstSearch(Collection<? extends Vertex> startingNode){

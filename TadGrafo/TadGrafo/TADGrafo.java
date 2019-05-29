@@ -402,6 +402,36 @@ public class TADGrafo {
         
         return mat[vOrigem.getId()][vDestino.getId()] != 0;
     }
+    public LinkedList<Edge> outGoingEdges(String label) {
+		LinkedList<Edge> lst = new LinkedList<Edge>();
+		Vertex v = (Vertex)this.dicLblVertex.findElement(label);
+		int id = v.getId();
+		if(!this.lstEliminados.contains(v.getId())) {
+			for (int i = primVertice; i <= ultiVertice; i++) {
+				int auxEdge = this.mat[id][i];
+				
+					lst.add(intToEdge(auxEdge));
+				
+			}
+		}
+		return lst;
+	}
+	
+	public LinkedList<Edge> incomingEdges(String label) {
+		
+		LinkedList<Edge> lst = new LinkedList<Edge>();
+    	if(dicLblVertex.NO_SUCH_KEY())
+    		return null;
+    	Vertex v = (Vertex)this.dicLblVertex.findElement(label);
+		int id = v.getId();
+		for (int i =primVertice; i<= ultiVertice; i++) {
+			int auxEdge = this.mat[i][id];
+			
+				lst.add(intToEdge(auxEdge));
+			
+		}
+		return lst;
+	}
     
     private int geraIDVertex() {
         int id;
