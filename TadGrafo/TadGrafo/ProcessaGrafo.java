@@ -2,6 +2,7 @@ package TadGrafo;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Queue;
@@ -15,69 +16,63 @@ public class ProcessaGrafo {
 	 
 	}
 	
+	public LinkedList<Vertex> dfs(String labelV){
+		LinkedList<Vertex> retorno = new LinkedList<Vertex>();
+		LinkedList<Vertex> pilha = new LinkedList<Vertex>();
+		pilha.add(grafo.getVertex(labelV));
+		while(pilha.size() != 0) { //repetir o processo
+			Vertex aux = pilha.pollLast();// tirar o ultimo da pilha 
+			//System.out.println(aux.getLabel());
+			LinkedList<Vertex> VertexSaida = grafo.outAdjacentVertices(aux.getLabel());
+			//Colocar na pilha os adjacentes
+			if(VertexSaida.size() != 0) {
+				if(!retorno.contains(aux)) {
+					retorno.add(aux);
+					}
+				for(Vertex v : VertexSaida) {
+
+					if(!retorno.contains(v)) {// para não haver repetições
+						pilha.add(v);
+					}
+				}	
+			}
+			else{
+				retorno.add(aux);
+			}
+			
+		}
+		return retorno;
+	}
 	
 
-	public LinkedList<Vertex> dbfs(String label){
-	 //Busca em largura
-	 LinkedList<Vertex> retorno = new LinkedList<Vertex>();
-	 return retorno;
-	}
-	/*
-	public LinkedList<Vertex> dfs(String labelV){
-		LinkedList<Vertex> aux = new LinkedList<Vertex>();		
-		aux.add(labelV);	
-		boolean[] visitados = new boolean[ grafo.numEdges() +1];		
-		LinkedList<Vertex> ordem = new LinkedList<Vertex>();	
+	public LinkedList<Vertex> bfs(String labelV){
+		//A lógica é bem parecida, porém é utilizado fila
+		LinkedList<Vertex> retorno = new LinkedList<Vertex>();
+		LinkedList<Vertex> fila = new LinkedList<Vertex>();
+
+		fila.add(grafo.getVertex(labelV));
 		
-		while( !aux.isEmpty()){		
-			Vertex removidos = aux.pop();		
-			
-			if( !visitados[removidos.getId()+1]){		
-				visitados[removidos.getId()+1]=true;	
-				aux.add(removidos);	
-				
-				LinkedList<Integer> rowOfNodes = grafo.incomingEdges(labelV).get(removidos);	
-				ListIterator<Integer> iterator = rowOfNodes.listIterator();		
-				while(iterator.hasNext()){			
-					int nodeInColumn = iterator.next();
-					if( !visitados[nodeInColumn+1]){		
-						aux.add(nodeInColumn);
+		while(fila.size() != 0) {
+			Vertex aux = fila.pop(); //colocar na fila os adjacentes e tirar o primeiro
+			// ficar repetindo o processo com o próximo da fila
+			LinkedList<Vertex> VertexSaida = this.grafo.outAdjacentVertices(aux.getLabel());
+			if(VertexSaida.size() != 0) {
+				if(!retorno.contains(aux)) {
+					retorno.add(aux);
+					}
+				for(Vertex v : VertexSaida) {
+					if(!retorno.contains(v)) {
+						fila.add(v);
 					}
 				}
 			}
-		}
-		System.out.println("\nDepth first search visitation order\n"+ordem);
-		return ordem;
-	}
-	
-	*/
-	/*
-	public LinkedList<Vertex> breadthFirstSearch(Collection<? extends Vertex> startingNode){
-		LinkedList<Vertex>nodeQueue = new LinkedList<Vertex>(); // VER DEPOIS
-		nodeQueue.addAll(startingNode);	
-		
-		boolean[] visitedNodes = new boolean[ grafo.numEdges() +1];		
-		LinkedList<Vertex> nodesInVisitedOrder = new LinkedList<Vertex>();	
-		
-		while( !nodeQueue.isEmpty()){		
-			int nodeRemovedFromQueue = nodeQueue.remove();		
-			
-			if( !visitedNodes[nodeRemovedFromQueue+1]){		
-				visitedNodes[nodeRemovedFromQueue+1]=true;	
-				nodesInVisitedOrder.add(nodeRemovedFromQueue);	
-				
-				LinkedList<Integer> rowOfNodes = grafo.incomingEdges().get(removidos);		
-				ListIterator<Integer> iterator = rowOfNodes.listIterator();		
-				while(iterator.hasNext()){			
-					int nodeInColumn = iterator.next();
-					if( !visitedNodes[nodeInColumn+1]){		
-						nodeQueue.add(nodeInColumn);
-					}
-				}
+			else{
+				retorno.add(aux);
 			}
 		}
-		System.out.println("\nBreadth first search visitation order\n"+nodesInVisitedOrder);
+		
+		return retorno;
 	}
 	
-	*/
+	
 }

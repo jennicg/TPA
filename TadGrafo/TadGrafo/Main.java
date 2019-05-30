@@ -1,57 +1,54 @@
 package TadGrafo;
 
+import java.util.LinkedList;
+
 public class Main {
 
 	public static void main(String[] args) {
-		// Teste 
-		TADGrafo g = new TADGrafo("teste");
-		g.insertVertex("A",null);
-		g.insertVertex("B",2);
-		g.insertVertex("C",3);
-		g.insertVertex("D",4);
-		//g.insertVertex("E");
-		/*
-		g.insertEdge(0, 1);
-		g.insertEdge(0, 2);
-		g.insertEdge(1, 0);
-		g.insertEdge(1, 2);
-		g.insertEdge(2, 0);
-		g.insertEdge(2, 1);
-		g.insertEdge(2, 3);
-		g.insertEdge(3, 2);
-		*/
-		g.printmat();
-		System.out.println(g.numVertices());
-		System.out.println(g.numEdges());
+		TADGrafo g = new TADGrafo("oi");
+		g.insertVertex("A", "1");
+		g.insertVertex("B", "2");
+		g.insertVertex("C", "3");
+		g.insertVertex("D", "4");
+		g.insertVertex("E", "5");
+		g.insertVertex("F", "6");
+		g.insertVertex("G", "7");
+		g.insertVertex("H", "8");
+
+	
+		g.insertEdge("A", "B", "o caminho", 3);
+		g.insertEdge("A", "C", "é longo", 666);
+		g.insertEdge("A", "D", "mas a derrota", 123);
+		g.insertEdge("C", "E", "é certa", 321);
+		g.insertEdge("A", "F", "morte", 321);
+		g.insertEdge("F", "G", "help", 321);
+		g.insertEdge("E", "H", "SD", 321);
+		System.out.println("Grafo: ");
+		g.printgrafo();
 		System.out.println();
-		
-		g.removeVertex("A");
-		
-		g.printmat();
-		System.out.println(g.numVertices());
-		System.out.println(g.numEdges());
+		ProcessaGrafo md = new ProcessaGrafo(g);
+		LinkedList<Vertex> resultado_dfs = new LinkedList<Vertex>();
+		LinkedList<Vertex> resultado_bfs = new LinkedList<Vertex>();
+		resultado_dfs = md.dfs("A");
+		resultado_bfs = md.dfs("A");
+		System.out.println("Grafo em busca de prfundidade: ");
+		for(int i= 0; i< resultado_dfs.size(); i++) {
+			System.out.print(resultado_dfs.get(i).getLabel() + "||");
+		}
 		System.out.println();
+		System.out.println("Grafo em busca de nível: ");
+		for(int i= 0; i< resultado_bfs.size(); i++) {
+			System.out.print(resultado_bfs.get(i).getLabel() + "||");
+		}
 		
-		g.insertVertex("A",null);
-		g.printmat();
-		System.out.println(g.numVertices());
-		System.out.println(g.numEdges());
+	
+	}
+}
 		
-		TADGrafo tadGrafoD = new TADGrafo("IAE MAN");
-        tadGrafoD.insertVertex("A", 1);
-        tadGrafoD.insertVertex("B", 2);
-        tadGrafoD.insertVertex("C", 3);
-        tadGrafoD.insertEdge("A", "B", "ab", 12);
-        tadGrafoD.insertEdge("B", "C", "bc", 23);
-        tadGrafoD.insertEdge("C", "C", "cc", 33);
-        
-        tadGrafoD.printmat();
-        
-        System.out.println("");
-        
-        tadGrafoD.printgrafo();
+		
+
 	
 
-	}
 
-}
+
+

@@ -80,7 +80,7 @@ public class TADGrafo {
                             for(int m = 0; m < lstEs.size(); m++) {
                                 e = (Edge)dicLblEdge.findElement(lstEs.get(m));
                                 if(e.getId() == idEdge) {
-                                    labelDestino = e.getLabel();
+                                	labelEdge = e.getLabel();
                                     break;
                                 }
                             }
@@ -107,7 +107,16 @@ public class TADGrafo {
             System.out.println(al.get(n));
         }
     }
-    
+	public Vertex getVertex(String label) {
+		Vertex vertex = (Vertex)dicLblVertex.findElement(label);
+		if(this.dicLblVertex.NO_SUCH_KEY()) {
+			return null;
+		}
+		else {
+			return vertex;
+		}
+	}
+	
     public int numVertices(){
         return quantVertices;
     }
@@ -402,6 +411,7 @@ public class TADGrafo {
         
         return mat[vOrigem.getId()][vDestino.getId()] != 0;
     }
+    /*
     public LinkedList<Edge> outGoingEdges(String label) {
 		LinkedList<Edge> lst = new LinkedList<Edge>();
 		Vertex v = (Vertex)this.dicLblVertex.findElement(label);
@@ -432,7 +442,7 @@ public class TADGrafo {
 		}
 		return lst;
 	}
-    
+    */
     private int geraIDVertex() {
         int id;
         
@@ -550,6 +560,8 @@ public class TADGrafo {
     	return lst;
     }
     
+    
+    
     public LinkedList<Vertex> outAdjacentVertices(String labelV){
     	Vertex v = (Vertex)dicLblVertex.findElement(labelV);
     	if(dicLblVertex.NO_SUCH_KEY())
@@ -557,11 +569,12 @@ public class TADGrafo {
     	LinkedList<Vertex> lst = new LinkedList<Vertex>();
     	int id = v.getId();
     	for(int k = primVertice; k<= ultiVertice; k++)
-    		if(!lstEliminados.contains(k) && (mat[k][id] != 0))
+    		if(!lstEliminados.contains(k) && (mat[id][k] != 0))
     			lst.add(intToVertex(k));
     	return lst;
     }
     
+   
     public LinkedList<Edge> incidentEdges(String labelV){
     	LinkedList<Edge> lst = inIncidentEdges(labelV);
     	lst.addAll(outIncidentEdges(labelV));
