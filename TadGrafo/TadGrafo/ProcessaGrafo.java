@@ -20,26 +20,40 @@ public class ProcessaGrafo {
 		LinkedList<Vertex> retorno = new LinkedList<Vertex>();
 		LinkedList<Vertex> pilha = new LinkedList<Vertex>();
 		pilha.add(grafo.getVertex(labelV));
+
+                //LinkedList<Vertex> pilha2 = new LinkedList<Vertex>();
+                //pilha2.addLast(pilha.pollLast());
+
 		while(pilha.size() != 0) { //repetir o processo
-			Vertex aux = pilha.pollLast();// tirar o ultimo da pilha 
-			//System.out.println(aux.getLabel());
+			Vertex aux = pilha.pollLast();// tirar o ultimo da pilha
+
+
 			LinkedList<Vertex> VertexSaida = grafo.outAdjacentVertices(aux.getLabel());
+                        
+            LinkedList<Vertex> VertexSaida2 = new LinkedList<Vertex>();
+                        
+                        for(int i = VertexSaida.size(); i > 0; i--){
+                            VertexSaida2.add(VertexSaida.get(i-1));
+                        }
+                        
 			//Colocar na pilha os adjacentes
-			if(VertexSaida.size() != 0) {
+			if(VertexSaida2.size() != 0) {
 				if(!retorno.contains(aux)) {
 					retorno.add(aux);
 					}
-				for(Vertex v : VertexSaida) {
+				for(Vertex v : VertexSaida2) {
 
 					if(!retorno.contains(v)) {// para não haver repetições
 						pilha.add(v);
+                                               
+                                                
 					}
-				}	
+				}
+                                
 			}
 			else{
 				retorno.add(aux);
 			}
-			
 		}
 		return retorno;
 	}

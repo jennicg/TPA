@@ -13,64 +13,41 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 import javax.xml.crypto.Data;
 public class ToGStream {
-	private static final String NODE_ID = "Node.nodeId";
-	@SuppressWarnings("unused")
-	private FileInputStream fpIn;
-	@SuppressWarnings("unused")
-	private FileOutputStream fpOut;
-	private BufferedReader reader;
-	private PrintWriter writer;
-	private Graph gr;
-	private String sep;
-
+private Graph g;
 	
-	public ToGStream(TADGrafo graph ) throws IdAlreadyInUseException, ElementNotFoundException, EdgeRejectedException, IOException {
-		//Converte um grafo do tipo TADGrafo para GraphStream
-		String line ="";
-		Integer edgeCount = 0;
-		while ((line = reader.readLine()) != null) {
-			if (line.startsWith("#")) continue;
-			line = line.trim();
-			String[] edgePoints = line.split(sep);
-//			System.out.print(edgePoints[0] + " : " ) ;
-//			System.out.println(edgePoints[1]);
-			if (edgePoints.length < 2) continue;
-			gr.addNode(edgePoints[0]);
-			gr.addNode(edgePoints[1]);
-			gr.addEdge((edgeCount++).toString(), edgePoints[0] , edgePoints[1]);
+	public ToGStream(TADGrafo g) {
+		
+		this.g = new SingleGraph("I can see dead pixels");
+		
+		Vertex[] vertex = g.vertices();
+		for(Vertex pos : vertex) {
+			Node no = this.g.addNode(pos.getLabel());
+			no.addAttribute("ui.label", pos.getLabel());
 		}
-		
-		this.writer.println(gr.getNodeCount() + " " + gr.getEdgeCount());
-		
-		Integer nodeCount = 0;
-		Iterator<Node> nIt = gr.getNodeIterator();
-		ArrayList<Node> arrNodes = new ArrayList<>();
-		while (nIt.hasNext()) {
-			Node nx = nIt.next();
-			arrNodes.add(nx);
-			nx.setAttribute(NODE_ID, ++nodeCount);
-		}
-	
-		arrNodes.stream()
-			.forEach(p -> {
-				System.out.println("" + p.getAttribute(NODE_ID));
-				writer.flush();
-			});
-		writer.flush();
-		writer.close();
-		
-		
+		Edge[] edges = g.edges();
+		LinkedList<String[]> arestas = new LinkedList<String[]>();
+		for (Edge origem : edges) {
+			Vertex[] endV = g.endVertices(origem.getLabel());
+				org.graphstream.graph.Edge edge = this.g.addEdge(origem.getLabel(), endV[0].getLabel(),endV[1].getLabel());
+				edge.addAttribute("ui.label", origem.getLabel());
+				String[] labelV = {endV[0].getLabel(),endV[1].getLabel()};
+				arestas.add(labelV);	
+			}
 	}
 	
 	public void exibe(String css) {
-		//Exibe o grafo com a lib definido pela String
-		 Graph graph = gr;
-		 Viewer viewer = graph.display();
-		 View view = viewer.getDefaultView();
+		g.removeAttribute("ui.stylesheet");
+		g.addAttribute("ui.stylesheet", css);
+		g.display();
 	}
+	
+	
+	
 
 }

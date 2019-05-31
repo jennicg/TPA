@@ -25,7 +25,7 @@ public class Main {
 		g.insertEdge("E", "H", "SD", 321);
 		System.out.println("Grafo: ");
 		g.printgrafo();
-		System.out.println();
+		
 		ProcessaGrafo md = new ProcessaGrafo(g);
 		LinkedList<Vertex> resultado_dfs = new LinkedList<Vertex>();
 		LinkedList<Vertex> resultado_bfs = new LinkedList<Vertex>();
@@ -40,7 +40,9 @@ public class Main {
 		for(int i= 0; i< resultado_bfs.size(); i++) {
 			System.out.print(resultado_bfs.get(i).getLabel() + "||");
 		}
-		
+		ToGStream show = new ToGStream(g);
+		String css = "graph { fill-color: green; }";
+		show.exibe(css);
 	
 	}
 }

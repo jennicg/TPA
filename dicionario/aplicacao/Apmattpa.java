@@ -14,7 +14,7 @@ public class Apmattpa {
 	public static void main(String[] args) throws FileNotFoundException, IOException{
 	       String arq = "C:\\Users\\jenny\\eclipse-workspace\\Tpa\\dicionario\\aplicacao\\bdmatrizes\\bdaritmat.csv"; 
 	       String matTxt;
-	       TADMatriz matrizAux =null;
+	       TADMatriz m =null;
 	       @SuppressWarnings("resource")
 	       		BufferedReader bufferReader = new BufferedReader(new FileReader(arq));
 	       String linha = bufferReader.readLine(); 
@@ -31,20 +31,20 @@ public class Apmattpa {
                     }
                     else{
                         matTxt = dado[1]+".txt";
-                        matrizAux = TADMatriz.carrega("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\dicionario\\aplicacao\\bdmatrizes\\"+matTxt);
-                        resultado = resultado.multi(matrizAux);
+                        m = TADMatriz.carrega("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\dicionario\\aplicacao\\bdmatrizes\\"+matTxt);
+                        resultado = resultado.multi(m);
                     }
                     break;
 	                case "-":
 	                    matTxt = dado[1]+".txt";
-                        matrizAux = TADMatriz.carrega("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\dicionario\\aplicacao\\bdmatrizes\\"+matTxt);
-	                    matrizAux.vezesK(-1f);
-	                    resultado = resultado.soma(matrizAux);
+                        m = TADMatriz.carrega("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\dicionario\\aplicacao\\bdmatrizes\\"+matTxt);
+	                    m.vezesK(-1f);
+	                    resultado = resultado.soma(m);
 	                    break;
 	                case "+":
 	                    matTxt = dado[1]+".txt";
-                        matrizAux = TADMatriz.carrega("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\dicionario\\aplicacao\\bdmatrizes\\"+matTxt);
-	                    resultado = resultado.soma(matrizAux);
+                        m = TADMatriz.carrega("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\dicionario\\aplicacao\\bdmatrizes\\"+matTxt);
+	                    resultado = resultado.soma(m);
 	                    break;
 	                case "t":
 	                	resultado = resultado.transposta();

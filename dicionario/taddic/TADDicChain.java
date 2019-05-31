@@ -9,10 +9,7 @@ import java.io.OutputStream;
 import java.math.BigInteger;
 import java.util.LinkedList;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.category.DefaultCategoryDataset;
+
 
 /**
  * @author jenni
@@ -374,6 +371,7 @@ public class TADDicChain {
 		}
 		return itens;
 	}
+	/*
 	
 	public void exibeDiagrama (int[] colisoes) {
 		colisoes =getColisoes();
@@ -400,6 +398,7 @@ public class TADDicChain {
 
 	}
 		}
+		*/
 		
 		
 

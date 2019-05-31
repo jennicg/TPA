@@ -117,6 +117,30 @@ public class TADGrafo {
 		}
 	}
 	
+	public Vertex[] vertices() {
+		Vertex[] v = new Vertex[numVertices()];
+		LinkedList<Object> vertex = dicLblVertex.elements();
+		for (int i = 0; i < vertex.size(); i++) {
+			v[i] = (Vertex)vertex.get(i);
+		}
+		return v;
+	}
+	
+	public Edge[] edges() {
+		Edge [] e = new Edge[numEdges()];
+		int pos = 0;
+		LinkedList<Object> edges = dicLblEdge.elements();
+		for(int i = 0; i < edges.size(); i++) {
+			Edge ed = (Edge)edges.get(i);
+				e[pos] = ed;
+				pos++;
+			
+		}
+		return e;
+	}
+	
+
+	
     public int numVertices(){
         return quantVertices;
     }
