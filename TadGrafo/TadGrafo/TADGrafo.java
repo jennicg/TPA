@@ -109,7 +109,7 @@ public class TADGrafo {
     }
 	public Vertex getVertex(String label) {
 		Vertex vertex = (Vertex)dicLblVertex.findElement(label);
-		if(this.dicLblVertex.NO_SUCH_KEY()) {
+		if(dicLblVertex.NO_SUCH_KEY()) {
 			return null;
 		}
 		else {
@@ -588,8 +588,10 @@ public class TADGrafo {
     
     public LinkedList<Vertex> outAdjacentVertices(String labelV){
     	Vertex v = (Vertex)dicLblVertex.findElement(labelV);
-    	if(dicLblVertex.NO_SUCH_KEY())
+    	if(dicLblVertex.NO_SUCH_KEY()) {
+    		//System.out.println("OUT OF BOUND");
     		return null;
+    	}
     	LinkedList<Vertex> lst = new LinkedList<Vertex>();
     	int id = v.getId();
     	for(int k = primVertice; k<= ultiVertice; k++)

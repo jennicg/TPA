@@ -42,7 +42,8 @@ private Graph g;
 	}
 	
 	public void exibe(String css) {
-		g.removeAttribute("ui.stylesheet");
+		if(css == null)
+			css = "";
 		g.addAttribute("ui.stylesheet", css);
 		g.display();
 	}

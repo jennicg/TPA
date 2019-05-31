@@ -17,6 +17,7 @@ public class Main {
 
 	
 		g.insertEdge("A", "B", "o caminho", 3);
+		//g.insertEdge("B", "A", "SEXTOU", 3);
 		g.insertEdge("A", "C", "é longo", 666);
 		g.insertEdge("A", "D", "mas a derrota", 123);
 		g.insertEdge("C", "E", "é certa", 321);
@@ -30,7 +31,7 @@ public class Main {
 		LinkedList<Vertex> resultado_dfs = new LinkedList<Vertex>();
 		LinkedList<Vertex> resultado_bfs = new LinkedList<Vertex>();
 		resultado_dfs = md.dfs("A");
-		resultado_bfs = md.dfs("A");
+		resultado_bfs = md.bfs("A");
 		System.out.println("Grafo em busca de prfundidade: ");
 		for(int i= 0; i< resultado_dfs.size(); i++) {
 			System.out.print(resultado_dfs.get(i).getLabel() + "||");
@@ -41,8 +42,9 @@ public class Main {
 			System.out.print(resultado_bfs.get(i).getLabel() + "||");
 		}
 		ToGStream show = new ToGStream(g);
-		String css = "graph { fill-color: green; }";
-		show.exibe(css);
+		String css = "graph { fill-color: red; }";
+		String teste = null;
+		show.exibe(teste);
 	
 	}
 }
