@@ -16,14 +16,14 @@ public class Main {
 		g.insertVertex("H", "8");
 
 	
-		g.insertEdge("A", "B", "o caminho", 3);
-		//g.insertEdge("B", "A", "SEXTOU", 3);
-		g.insertEdge("A", "C", "é longo", 666);
-		g.insertEdge("A", "D", "mas a derrota", 123);
-		g.insertEdge("C", "E", "é certa", 321);
-		g.insertEdge("A", "F", "morte", 321);
-		g.insertEdge("F", "G", "help", 321);
-		g.insertEdge("E", "H", "SD", 321);
+		g.insertEdge("A", "B", "O CAMINHO", 3);
+		//g.insertEdge("B", "A", "SEXTOU", 3); DANDO ERRO PQ A LIB É DE GRAPH NÃO DIRIGIDO!
+		g.insertEdge("A", "C", "AINDA NAO TA TUDO CERTO", 666);
+		g.insertEdge("A", "D", "É LONGO", 123);
+		g.insertEdge("C", "E", "ODIOOOO", 321);
+		g.insertEdge("A", "F", "MAS A DERROTA", 321);
+		g.insertEdge("F", "G", "É CERTA", 321);
+		g.insertEdge("E", "H", "DEU POR HOJE", 321);
 		System.out.println("Grafo: ");
 		g.printgrafo();
 		

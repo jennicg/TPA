@@ -1,8 +1,6 @@
 package TadGrafo;
 import java.util.ArrayList;
-
-
-
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import taddic.TADDicChain;
@@ -351,6 +349,19 @@ public class TADGrafo {
         return e; 
     }
     
+    /*
+    public boolean verificaEdgenoDic(String label) {        
+        //Inclusion of a new arch
+        if(dicLblEdge.NO_SUCH_KEY()) {
+          return true;
+        } //Update of a existent arch
+        else {
+          return false;
+        }
+    }
+    */
+  
+    
     public Object removeEdge(String edge){
         Edge e  = (Edge)dicLblEdge.findElement(edge);
         if(dicLblEdge.NO_SUCH_KEY()) {
@@ -572,7 +583,7 @@ public class TADGrafo {
     }
     
     
-    public LinkedList<Vertex> inAdjacentVertices(String labelV){
+    public LinkedList<Vertex> outAdjacentVertices(String labelV){
     	Vertex v = (Vertex)dicLblVertex.findElement(labelV);
     	if(dicLblVertex.NO_SUCH_KEY())
     		return null;
@@ -586,7 +597,7 @@ public class TADGrafo {
     
     
     
-    public LinkedList<Vertex> outAdjacentVertices(String labelV){
+    public LinkedList<Vertex> inAdjacentVertices(String labelV){
     	Vertex v = (Vertex)dicLblVertex.findElement(labelV);
     	if(dicLblVertex.NO_SUCH_KEY()) {
     		//System.out.println("OUT OF BOUND");

@@ -30,7 +30,7 @@ public class ProcessaGrafo {
 				Vertex aux = pilha.pollLast();// tirar o ultimo da pilha
 
 
-				LinkedList<Vertex> VertexSaida = grafo.outAdjacentVertices(aux.getLabel());
+				LinkedList<Vertex> VertexSaida = grafo.inAdjacentVertices(aux.getLabel());
 	                        
 	            LinkedList<Vertex> VertexSaida2 = new LinkedList<Vertex>();
 	                        
@@ -74,7 +74,7 @@ public class ProcessaGrafo {
 		while(fila.size() != 0) {
 			Vertex aux = fila.pop(); //colocar na fila os adjacentes e tirar o primeiro
 			// ficar repetindo o processo com o próximo da fila
-			LinkedList<Vertex> VertexSaida = this.grafo.outAdjacentVertices(aux.getLabel());
+			LinkedList<Vertex> VertexSaida = this.grafo.inAdjacentVertices(aux.getLabel());
 			if(VertexSaida.size() != 0) {
 				if(!retorno.contains(aux)) {
 					retorno.add(aux);

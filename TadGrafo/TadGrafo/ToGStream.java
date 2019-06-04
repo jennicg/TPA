@@ -34,16 +34,25 @@ private Graph g;
 		LinkedList<String[]> arestas = new LinkedList<String[]>();
 		for (Edge origem : edges) {
 			Vertex[] endV = g.endVertices(origem.getLabel());
-				org.graphstream.graph.Edge edge = this.g.addEdge(origem.getLabel(), endV[0].getLabel(),endV[1].getLabel());
+				org.graphstream.graph.Edge edge = this.g.addEdge(origem.getLabel(), endV[0].getLabel(),endV[1].getLabel(),true);
 				edge.addAttribute("ui.label", origem.getLabel());
 				String[] labelV = {endV[0].getLabel(),endV[1].getLabel()};
 				arestas.add(labelV);	
+				
+			
+				
+			
+				
 			}
 	}
 	
 	public void exibe(String css) {
 		if(css == null)
 			css = "";
+	    System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+	    g.setAttribute("stylesheet", "node { size: 30px; fill-color: yellow, orange; fill-mode: gradient-horizontal; text-size: 15px;} edge { z-index: 0; fill-color: #333; size: 3px; text-size: 10px; text-color: red; }");
+	    g.addAttribute("ui.quality");
+	    g.addAttribute("ui.antialias");
 		g.addAttribute("ui.stylesheet", css);
 		g.display();
 	}
