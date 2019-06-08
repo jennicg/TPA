@@ -1,10 +1,14 @@
 package TadGrafo;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.LinkedList;
+
+import app_grafo.ToTGF;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 		TADGrafo g = new TADGrafo("oi");
 		g.insertVertex("A", "1");
 		g.insertVertex("B", "2");
@@ -41,10 +45,38 @@ public class Main {
 		for(int i= 0; i< resultado_bfs.size(); i++) {
 			System.out.print(resultado_bfs.get(i).getLabel() + "||");
 		}
+		/*
 		ToGStream show = new ToGStream(g);
 		String css = "graph { fill-color: red; }";
 		String teste = null;
 		show.exibe(teste);
+		*/
+		
+        
+        LinkedList vertices = new LinkedList();
+        LinkedList arestas = new LinkedList();
+        ToTGF conv = new ToTGF("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\TadGrafo\\movies.txt");
+        conv.converte("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\TadGrafo\\movies.txt");
+        
+        vertices=conv.filmesEAtores();
+        for(int i=0; i<vertices.size();i++){
+            System.out.println("Pos: "+i+": "+vertices.get(i));
+            
+        }
+        
+        arestas= conv.relacionamentos();
+        for(int i=0; i< arestas.size();i++){
+            System.out.println("Relação "+i+": "+arestas.get(i));
+            
+        }
+        conv.write();
+        
+        TADGrafo grafo = conv.carrega("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\saidafinal.tgf");
+        ToGStream show = new ToGStream(grafo);
+		String css = "graph { fill-color: red; }";
+		String teste = null;
+		show.exibe(teste);
+
 	
 	}
 }

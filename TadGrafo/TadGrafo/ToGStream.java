@@ -46,6 +46,8 @@ private Graph g;
 			}
 	}
 	
+	
+	
 	public void exibe(String css) {
 		if(css == null)
 			css = "";

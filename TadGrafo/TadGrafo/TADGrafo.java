@@ -26,7 +26,14 @@ public class TADGrafo {
         this.nome = nome;
     }
     
-    public void printmat(){
+    public TADGrafo(String nome, int i) {
+    	
+		// TODO Auto-generated constructor stub
+    	mat = new int[i][i];
+        this.nome = nome;
+	}
+
+	public void printmat(){
         for(int i = primVertice; i < ultiVertice; i++) {
             if(!lstEliminados.contains(i)) {
                 for(int k = primVertice; k <= ultiVertice; k++) {
@@ -124,19 +131,27 @@ public class TADGrafo {
 		return v;
 	}
 	
+	
+	
 	public Edge[] edges() {
 		Edge [] e = new Edge[numEdges()];
 		int pos = 0;
 		LinkedList<Object> edges = dicLblEdge.elements();
 		for(int i = 0; i < edges.size(); i++) {
 			Edge ed = (Edge)edges.get(i);
+			if(!validaEdge(e,ed.getLabel())) {
 				e[pos] = ed;
 				pos++;
+				
+			}
+				
 			
 		}
 		return e;
 	}
 	
+	
+
 
 	
     public int numVertices(){
@@ -624,5 +639,16 @@ public class TADGrafo {
     	return lst;
     	
     }
+    //PRIVATE
+	   
+	private boolean validaEdge(Edge[] vetor, String str) {
+		for (Edge i : vetor) {
+			if(i != null && i.getLabel().equals(str)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
            
 }
