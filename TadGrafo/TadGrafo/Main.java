@@ -3,6 +3,7 @@ package TadGrafo;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
+import _my_tools.ArquivoTxt;
 
 import app_grafo.ToTGF;
 
@@ -52,31 +53,15 @@ public class Main {
 		show.exibe(teste);
 		*/
 		
+   
+        ToTGF.converteTxt_Tgf("movies2");
+        TADGrafo grafo = ToTGF.carrega("movies2");
+        grafo.printgrafo();
         
-        LinkedList vertices = new LinkedList();
-        LinkedList arestas = new LinkedList();
-        ToTGF conv = new ToTGF("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\TadGrafo\\movies.txt");
-        conv.converte("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\TadGrafo\\movies.txt");
-        
-        vertices=conv.filmesEAtores();
-        for(int i=0; i<vertices.size();i++){
-            System.out.println("Pos: "+i+": "+vertices.get(i));
-            
-        }
-        
-        arestas= conv.relacionamentos();
-        for(int i=0; i< arestas.size();i++){
-            System.out.println("Relação "+i+": "+arestas.get(i));
-            
-        }
-        conv.write();
-        
-        TADGrafo grafo = conv.carrega("C:\\Users\\jenny\\eclipse-workspace\\Tpa\\saidafinal.tgf");
         ToGStream show = new ToGStream(grafo);
-		String css = "graph { fill-color: red; }";
-		String teste = null;
-		show.exibe(teste);
-
+        String teste = null;
+        show.exibe(teste);
+       
 	
 	}
 }

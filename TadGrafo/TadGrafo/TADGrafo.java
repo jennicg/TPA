@@ -122,6 +122,18 @@ public class TADGrafo {
 		}
 	}
 	
+	public void printGrafoTeste(){
+        for(int i = primVertice; i < ultiVertice; i++){
+            if(!lstEliminados.contains(i)){
+                for(int k=primVertice; k < ultiVertice; k++){
+                    System.out.print(String.format("%04d", mat[i][k]));
+                    System.out.print(" ");
+                }
+                System.out.println(" ");
+            }
+        }
+    }
+	
 	public Vertex[] vertices() {
 		Vertex[] v = new Vertex[numVertices()];
 		LinkedList<Object> vertex = dicLblVertex.elements();
@@ -420,7 +432,7 @@ public class TADGrafo {
         }
 
         if(idV == ultiVertice) {
-            for(int i = ultiVertice+1; i <= primVertice; i++) {
+            for(int i = ultiVertice+1; i <= primVertice; i--) {
                 if(!lstEliminados.contains(i)) {
                     ultiVertice = i;
                     break;
@@ -435,7 +447,7 @@ public class TADGrafo {
                 mat[idV][i] = 0;
             }
             
-            //Fill removed vertex column with 0's that menas the vertex does not exist
+            //Fill removed vertex column with 0's that means the vertex does not exist
             //Also prevent from decrementing quantEdges already decremented
             if((mat[i][idV] !=0) && (mat[idV][i] != mat[i][idV])) {
                 quantEdges--;

@@ -73,7 +73,10 @@ public class TADDicChain {
 		return vetBuckets.length;
 	}
 	
-	
+	  public LinkedList[] getVetBuckets(){
+	        return this.vetBuckets;
+	    }
+	    
 	private long hash_func (Object k) {
 		long soma = 0;
 		//Converte o objeto chave k em um array de bytes
