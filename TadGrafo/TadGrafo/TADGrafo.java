@@ -212,16 +212,7 @@ public class TADGrafo {
         return null;
     }
     
-    public Vertex intToVertex(int id) {
-    	LinkedList<Object> lst = dicLblVertex.elements();
-    	for(int i = 0; i <lst.size(); i++) {
-    		Vertex v = (Vertex)lst.get(i);
-    		if(id == v.getId())
-    			return v;
-    	}
-    	return null;
-    }
-    
+   
     
     public Edge intToEdge (int id) {
     	LinkedList<Object> lst = dicLblEdge.elements();
@@ -363,6 +354,7 @@ public class TADGrafo {
         if(dicLblEdge.NO_SUCH_KEY()) {
             e = new Edge(label, o);
             e.setId(geraIDedge++);
+           
             
             dicLblEdge.insertItem(label, e);
             
@@ -371,7 +363,10 @@ public class TADGrafo {
         } //Update of a existent arch
         else {
             e.setDado(o);
+           // e.setPeso(peso);
         }
+    
+       // System.out.println("A aresta "+ e.getLabel() + "Peso da aresta: " + e.getPeso());
         
         return e; 
     }
@@ -617,10 +612,14 @@ public class TADGrafo {
     	LinkedList<Vertex> lst = new LinkedList<Vertex>();
     	int id = v.getId();
     	for(int k = primVertice; k<= ultiVertice; k++)
-    		if(!lstEliminados.contains(k) && (mat[id][k] != 0))
+    		if(!lstEliminados.contains(k) && (mat[k][id] != 0))
     			lst.add(intToVertex(k));
     	return lst;
     }
+    
+    
+    
+		
     
     
     
@@ -636,6 +635,16 @@ public class TADGrafo {
     		if(!lstEliminados.contains(k) && (mat[id][k] != 0))
     			lst.add(intToVertex(k));
     	return lst;
+    }
+    
+    public Vertex intToVertex(int id) {
+    	LinkedList<Object> lst = dicLblVertex.elements();
+    	for(int i = 0; i <lst.size(); i++) {
+    		Vertex v = (Vertex)lst.get(i);
+    		if(id == v.getId())
+    			return v;
+    	}
+    	return null;
     }
     
    
