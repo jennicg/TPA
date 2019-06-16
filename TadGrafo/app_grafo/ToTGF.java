@@ -113,7 +113,7 @@ public class ToTGF {
 	            }else{
 	            	//pegar as relações
 	                separador = linha.split(" ");
-	                grafo.insertEdge(separador[0], separador[1], "", "");
+	                grafo.insertEdge(separador[0], separador[1], "", "",0);
 	            }
 	        }
 	        open.close();

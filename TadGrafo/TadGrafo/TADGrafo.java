@@ -200,11 +200,13 @@ public class TADGrafo {
         }
         else {
             LinkedList<Object> lstEdgeKeys = dicLblEdge.keys();
-            
+          
             for(int i = 0; i < lstEdgeKeys.size(); i++) {
                 Edge e = (Edge)dicLblEdge.findElement(lstEdgeKeys.get(i));
-                if(vOrigem.getId() == idEdge) {
+               
+                if(vDestino.getId() == idEdge) {
                     return e;
+                   
                 }
             }
         }
@@ -223,6 +225,8 @@ public class TADGrafo {
     	}
     	return null;
     }
+    
+    
     public Vertex[] endVertices(String labelE){ 
     	Edge oE = (Edge)dicLblEdge.findElement(labelE);
     	if(dicLblEdge.NO_SUCH_KEY())
@@ -337,7 +341,10 @@ public class TADGrafo {
         return v;
     }
     
-    public Edge insertEdge(String origem, String destino, String label, Object o) {
+
+	
+    
+    public Edge insertEdge(String origem, String destino, String label, Object o, int peso) {
         Vertex vOrigem = (Vertex)dicLblVertex.findElement(origem);
         if(dicLblVertex.NO_SUCH_KEY()) {
             return null;
@@ -354,19 +361,16 @@ public class TADGrafo {
         if(dicLblEdge.NO_SUCH_KEY()) {
             e = new Edge(label, o);
             e.setId(geraIDedge++);
-           
-            
+            e.setSource(vOrigem);
+            e.setDestination(vDestino);
+            e.setPeso(peso);
             dicLblEdge.insertItem(label, e);
-            
             mat[vOrigem.getId()][vDestino.getId()] = e.getId();
             quantEdges++;
         } //Update of a existent arch
         else {
             e.setDado(o);
-           // e.setPeso(peso);
         }
-    
-       // System.out.println("A aresta "+ e.getLabel() + "Peso da aresta: " + e.getPeso());
         
         return e; 
     }
@@ -427,7 +431,7 @@ public class TADGrafo {
         }
 
         if(idV == ultiVertice) {
-            for(int i = ultiVertice+1; i <= primVertice; i--) {
+            for(int i = ultiVertice-1; i <= primVertice; i--) {
                 if(!lstEliminados.contains(i)) {
                     ultiVertice = i;
                     break;
@@ -626,7 +630,6 @@ public class TADGrafo {
     public LinkedList<Vertex> inAdjacentVertices(String labelV){
     	Vertex v = (Vertex)dicLblVertex.findElement(labelV);
     	if(dicLblVertex.NO_SUCH_KEY()) {
-    		//System.out.println("OUT OF BOUND");
     		return null;
     	}
     	LinkedList<Vertex> lst = new LinkedList<Vertex>();

@@ -2,22 +2,23 @@ package TadGrafo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Deque;
+import java.util.Collections;
 import java.util.LinkedList;
-import java.util.ListIterator;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableSet;
+import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.Set;
 import java.util.Stack;
+import java.util.TreeSet;
 
 public class ProcessaGrafo {
 	TADGrafo grafo;
-	private Vertex[] verticesGrafo;
-	private Edge[] edgesGrafo;
-	
-	
 
 	
-	
+
+
 	
 	public  ProcessaGrafo(TADGrafo g) {
 	 //Armazenar o grafo g
@@ -136,23 +137,141 @@ public class ProcessaGrafo {
 		
 		return retorno;
 	}
+	
+	private List<Vertex> grafo1 = new ArrayList<Vertex>();
+	List<Vertex> menorCaminho = new ArrayList<Vertex>();
+	
+	public void setVertices(List<Vertex> vertices) {
 
-	
-	
-	
-	
-	
-	public void printmat(int[][] passedMatrix){
-        for(int i = 0; i < passedMatrix.length; i++) {
-                for(int k = 0; k < passedMatrix.length; k++) {
-                        System.out.println(String.format("%d",passedMatrix[i][k]));
-             
-                }
-                
-            System.out.println();    
-      }
+		this.grafo1.addAll(vertices);
+	}
 
-    }
+	public void adicionarVertice(Vertex novoVertice) {
+
+		this.grafo1.add(novoVertice);
+	}
+
+	public List<Vertex> getVertices() {
+
+		return this.grafo1;
+	}
+
+	// Variavel que recebe os vertices pertencentes ao menor caminho
+	Vertex verticeCaminho;
+
+	// Variavel que guarda o vertice que esta sendo visitado
+	Vertex atual;
+
+	// Variavel que marca o vizinho do vertice atualmente visitado
+	Vertex vizinho;
+
+	// Lista dos vertices que ainda nao foram visitados
+	List<Vertex> naoVisitados = new ArrayList<Vertex>();
+
+	// Algoritmo de Dijkstra
+	public List<Vertex> encontrarMenorCaminhoDijkstra(TADGrafo grafo, Vertex v1,
+			Vertex v2) {
+
+		// Adiciona a origem na lista do menor caminho
+		menorCaminho.add(v1);
+
+		// Colocando a distancias iniciais
+		for (int i = 0; i < grafo.numVertices(); i++) {
+
+			// Vertice atual tem distancia zero, e todos os outros,
+			// 9999("infinita")
+			if (((Vertex) grafo.dicLblVertex.elements().get(i)).getLabel()
+					.equals(v1.getLabel())) {
+
+				((Vertex)grafo.dicLblVertex.elements().get(i)).setDistancia(0);
+
+			} else {
+
+				((Vertex)grafo.dicLblVertex.elements().get(i)).setDistancia(9999);
+
+			}
+			// Insere o vertice na lista de vertices nao visitados
+			this.naoVisitados.add(((Vertex)grafo.dicLblVertex.elements().get(i)));
+		}
+
+		Collections.sort(naoVisitados);
+
+		// O algoritmo continua ate que todos os vertices sejam visitados
+		while (!this.naoVisitados.isEmpty()) {
+
+			// Toma-se sempre o vertice com menor distancia, que eh o primeiro
+			// da
+			// lista
+
+			atual = this.naoVisitados.get(0);
+			System.out.println("Pegou esse vertice:  " + atual);
+			/*
+			 * Para cada vizinho (cada aresta), calcula-se a sua possivel
+			 * distancia, somando a distancia do vertice atual com a da aresta
+			 * correspondente. Se essa distancia for menor que a distancia do
+			 * vizinho, esta eh atualizada.
+			 */
+			LinkedList<Vertex> VertexSaida = this.grafo.inAdjacentVertices(atual.getLabel());
+			for (int i = 0; i < VertexSaida.size(); i++) {
+				System.out.println("Oi" + this.grafo.inAdjacentVertices(atual.getLabel()));
+
+				vizinho = VertexSaida.get(i);
+				System.out.println("Olhando o vizinho de " + atual + ": "
+						+ vizinho);
+				if (!vizinho.verificarVisita()) {
+
+					// Comparando a distância do vizinho com a possível
+					// distância
+					if (vizinho.getDistancia() > (atual.getDistancia() + VertexSaida.get(i).getDistancia())) {
+
+						vizinho.setDistancia(atual.getDistancia()
+								+ VertexSaida.get(i).getDistancia());
+						vizinho.setPai(atual);
+
+						/*
+						 * Se o vizinho eh o vertice procurado, e foi feita uma
+						 * mudanca na distancia, a lista com o menor caminho
+						 * anterior eh apagada, pois existe um caminho menor
+						 * vertices pais, ateh o vertice origem.
+						 */
+						if (vizinho == v2) {
+							//menorCaminho.clear();
+							verticeCaminho = vizinho;
+							menorCaminho.add(vizinho);
+							while (verticeCaminho.getPai() != null) {
+
+								menorCaminho.add(verticeCaminho.getPai());
+								verticeCaminho = verticeCaminho.getPai();
+
+							}
+							// Ordena a lista do menor caminho, para que ele
+							// seja exibido da origem ao destino.
+							Collections.sort(menorCaminho);
+
+						}
+					}
+				}
+
+			}
+			// Marca o vertice atual como visitado e o retira da lista de nao
+			// visitados
+			atual.visitar();
+			this.naoVisitados.remove(atual);
+			/*
+			 * Ordena a lista, para que o vertice com menor distancia fique na
+			 * primeira posicao
+			 */
+
+			Collections.sort(naoVisitados);
+			System.out.println("Nao foram visitados ainda:"+naoVisitados);
+
+		}
+
+		return menorCaminho;
+	}
+
+	  
+
 	
 	
 }
