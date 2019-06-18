@@ -17,60 +17,13 @@ public class ProcessaGrafo {
 	TADGrafo grafo;
 
 	
-
-
-	
 	public  ProcessaGrafo(TADGrafo g) {
 	 //Armazenar o grafo g
 	 grafo = g;
 	 
 	}
 	
-	public static void floydWarshall(TADGrafo grafo, int [][] weights) {
-		int numVertices = grafo.numVertices();
-        double[][] dist = new double[numVertices][numVertices];
-        for (double[] row : dist)
-            Arrays.fill(row, Double.POSITIVE_INFINITY);
- 
-        for (int[] w : weights)
-            dist[w[0] - 1][w[1] - 1] = w[2];
- 
-        int[][] next = new int[numVertices][numVertices];
-        for (int i = 0; i < next.length; i++) {
-            for (int j = 0; j < next.length; j++)
-                if (i != j)
-                    next[i][j] = j + 1;
-        }
- 
-        for (int k = 0; k < numVertices; k++)
-            for (int i = 0; i < numVertices; i++)
-                for (int j = 0; j < numVertices; j++)
-                    if (dist[i][k] + dist[k][j] < dist[i][j]) {
-                        dist[i][j] = dist[i][k] + dist[k][j];
-                        next[i][j] = next[i][k];
-                    }
- 
-        printResult(dist, next);
-    }
- 
-    static void printResult(double[][] dist, int[][] next) {
-        System.out.println("par     dist    caminho");
-        for (int i = 0; i < next.length; i++) {
-            for (int j = 0; j < next.length; j++) {
-                if (i != j) {
-                    int u = i + 1;
-                    int v = j + 1;
-                    String caminho = String.format("%d -> %d    %2d     %s", u, v,
-                            (int) dist[i][j], u);
-                    do {
-                        u = next[u - 1][v - 1];
-                        caminho += " -> " + u;
-                    } while (u != v);
-                    System.out.println(caminho);
-                }
-            }
-        }
-    }
+	
 	
 	
 	public LinkedList<Vertex> dfs(String labelV){
@@ -138,140 +91,139 @@ public class ProcessaGrafo {
 		return retorno;
 	}
 	
-	private List<Vertex> grafo1 = new ArrayList<Vertex>();
-	List<Vertex> menorCaminho = new ArrayList<Vertex>();
-	
-	public void setVertices(List<Vertex> vertices) {
+	public static void floydWarshall(TADGrafo grafo, int [][] weights) {
+		int numVertices = grafo.numVertices();
+        double[][] dist = new double[numVertices][numVertices];
+        for (double[] row : dist)
+            Arrays.fill(row, Double.POSITIVE_INFINITY);
+ 
+        for (int[] w : weights)
+            dist[w[0] - 1][w[1] - 1] = w[2];
+ 
+        int[][] next = new int[numVertices][numVertices];
+        for (int i = 0; i < next.length; i++) {
+            for (int j = 0; j < next.length; j++)
+                if (i != j)
+                    next[i][j] = j + 1;
+        }
+ 
+        for (int k = 0; k < numVertices; k++)
+            for (int i = 0; i < numVertices; i++)
+                for (int j = 0; j < numVertices; j++)
+                    if (dist[i][k] + dist[k][j] < dist[i][j]) {
+                        dist[i][j] = dist[i][k] + dist[k][j];
+                        next[i][j] = next[i][k];
+                    }
+ 
+        printResult(dist, next);
+    }
+ 
+    static void printResult(double[][] dist, int[][] next) {
+        System.out.println("par     dist    caminho");
+        for (int i = 0; i < next.length; i++) {
+            for (int j = 0; j < next.length; j++) {
+                if (i != j) {
+                    int u = i + 1;
+                    int v = j + 1;
+                    String caminho = String.format("%d -> %d    %2d     %s", u, v,
+                            (int) dist[i][j], u);
+                    do {
+                        u = next[u - 1][v - 1];
+                        caminho += " -> " + u;
+                    } while (u != v);
+                    System.out.println(caminho);
+                }
+            }
+        }
+    }
 
-		this.grafo1.addAll(vertices);
-	}
-
-	public void adicionarVertice(Vertex novoVertice) {
-
-		this.grafo1.add(novoVertice);
-	}
-
-	public List<Vertex> getVertices() {
-
-		return this.grafo1;
-	}
-
-	// Variavel que recebe os vertices pertencentes ao menor caminho
-	Vertex verticeCaminho;
-
-	// Variavel que guarda o vertice que esta sendo visitado
-	Vertex atual;
-
-	// Variavel que marca o vizinho do vertice atualmente visitado
-	Vertex vizinho;
-
-	// Lista dos vertices que ainda nao foram visitados
-	List<Vertex> naoVisitados = new ArrayList<Vertex>();
-
-	// Algoritmo de Dijkstra
-	public List<Vertex> encontrarMenorCaminhoDijkstra(TADGrafo grafo, Vertex v1,
-			Vertex v2) {
-
-		// Adiciona a origem na lista do menor caminho
-		menorCaminho.add(v1);
-
-		// Colocando a distancias iniciais
-		for (int i = 0; i < grafo.numVertices(); i++) {
-
-			// Vertice atual tem distancia zero, e todos os outros,
-			// 9999("infinita")
-			if (((Vertex) grafo.dicLblVertex.elements().get(i)).getLabel()
-					.equals(v1.getLabel())) {
-
-				((Vertex)grafo.dicLblVertex.elements().get(i)).setDistancia(0);
-
-			} else {
-
-				((Vertex)grafo.dicLblVertex.elements().get(i)).setDistancia(9999);
-
-			}
-			// Insere o vertice na lista de vertices nao visitados
-			this.naoVisitados.add(((Vertex)grafo.dicLblVertex.elements().get(i)));
+	public int[] dijkstra(TADGrafo grafo, Vertex v1) {
+		Vertex[] verticesGrafo = grafo.vertices();
+		int[]peso = new int[verticesGrafo.length];
+		String[] caminho = new String[peso.length];
+		LinkedList<Integer> vizinhos = new LinkedList<Integer>();
+		for (int i = 0; i < peso.length; i++) {
+			peso[i] = Integer.MAX_VALUE;
+			vizinhos.add(i);
 		}
-
-		Collections.sort(naoVisitados);
-
-		// O algoritmo continua ate que todos os vertices sejam visitados
-		while (!this.naoVisitados.isEmpty()) {
-
-			// Toma-se sempre o vertice com menor distancia, que eh o primeiro
-			// da
-			// lista
-
-			atual = this.naoVisitados.get(0);
-			System.out.println("Pegou esse vertice:  " + atual);
-			/*
-			 * Para cada vizinho (cada aresta), calcula-se a sua possivel
-			 * distancia, somando a distancia do vertice atual com a da aresta
-			 * correspondente. Se essa distancia for menor que a distancia do
-			 * vizinho, esta eh atualizada.
-			 */
-			LinkedList<Vertex> VertexSaida = this.grafo.inAdjacentVertices(atual.getLabel());
-			for (int i = 0; i < VertexSaida.size(); i++) {
-				System.out.println("Oi" + this.grafo.inAdjacentVertices(atual.getLabel()));
-
-				vizinho = VertexSaida.get(i);
-				System.out.println("Olhando o vizinho de " + atual + ": "
-						+ vizinho);
-				if (!vizinho.verificarVisita()) {
-
-					// Comparando a distância do vizinho com a possível
-					// distância
-					if (vizinho.getDistancia() > (atual.getDistancia() + VertexSaida.get(i).getDistancia())) {
-
-						vizinho.setDistancia(atual.getDistancia()
-								+ VertexSaida.get(i).getDistancia());
-						vizinho.setPai(atual);
-
-						/*
-						 * Se o vizinho eh o vertice procurado, e foi feita uma
-						 * mudanca na distancia, a lista com o menor caminho
-						 * anterior eh apagada, pois existe um caminho menor
-						 * vertices pais, ateh o vertice origem.
-						 */
-						if (vizinho == v2) {
-							//menorCaminho.clear();
-							verticeCaminho = vizinho;
-							menorCaminho.add(vizinho);
-							while (verticeCaminho.getPai() != null) {
-
-								menorCaminho.add(verticeCaminho.getPai());
-								verticeCaminho = verticeCaminho.getPai();
-
+		peso[v1.getId()] = 0;
+		int posEdge = v1.getId();
+		caminho[posEdge] = v1.getLabel();
+	
+		while(vizinhos.size() != 0) {					
+			vizinhos.remove((Integer)posEdge);
+			int[] dist = peso.clone();
+			String[] atualLocal = caminho.clone();
+			LinkedList<Vertex> aux = grafo.adjacentVertices(verticesGrafo[posEdge].getLabel());					
+			for (Vertex v : aux) {					
+				if(grafo.getEdge(verticesGrafo[posEdge].getLabel(), v.getLabel()) != null && vizinhos.contains((Integer)(v.getId()))) {				
+					int novoPeso = grafo.getEdge(verticesGrafo[posEdge].getLabel(), v.getLabel()).getPeso()+ peso[posEdge];					
+					int pesoAtual = peso[(v.getId())];				
+					if(pesoAtual > novoPeso) {
+						dist[v.getId()] = novoPeso;
+						atualLocal[v.getId()] = caminho[posEdge] +'-' + v.getLabel();					
+					}
+				}
+			}
+			peso = dist;
+			caminho = atualLocal;
+			if(vizinhos.size() != 0) {
+				posEdge = verificaMenorValor(peso,vizinhos);		
+			}
+		}
+		for(String v : caminho) {
+			System.out.println(v);
+		}
+		return peso;		
+	}
+	
+	private int verificaMenorValor(int[] peso, LinkedList<Integer> vizinhos) {
+		int menor = Integer.MAX_VALUE;
+		int id = -1;
+		for(int i = 0; i < peso.length; i++) {
+			if( peso[i] < menor && vizinhos.contains((Integer)i)) {
+				menor = peso[i];
+				id = i;
+			}
+		}
+		return id;
+	}
+	
+	
+	public int[] bellmanFord(TADGrafo grafo, Vertex v1) {
+		Vertex[] verticesGrafo = grafo.vertices();
+		int[] peso = new int[verticesGrafo.length];
+		for(int i = 0; i < peso.length; i++) {
+			peso[i] = Integer.MAX_VALUE;
+		}
+		int id = v1.getId();
+		peso[id] = 0;
+		for(int i = 0; i < (verticesGrafo.length - 1); i++) {
+			int[] pesoAtual = peso.clone();
+			for(int j = 0; j < pesoAtual.length; j++) {
+				if(pesoAtual[j] != Integer.MAX_VALUE) {
+					Vertex vertex = verticesGrafo[j];
+					int posVertex = vertex.getId();
+					LinkedList<Vertex> connections = grafo.adjacentVertices(vertex.getLabel());
+					for(Vertex v : connections) {
+						Edge e = this.grafo.getEdge(vertex.getLabel(), v.getLabel());
+						if (e != null) {
+							int pesoTotal = pesoAtual[posVertex]+e.getPeso();
+							if(pesoAtual[(v.getId())] > pesoTotal) {
+								pesoAtual[v.getId()] = pesoTotal;
 							}
-							// Ordena a lista do menor caminho, para que ele
-							// seja exibido da origem ao destino.
-							Collections.sort(menorCaminho);
-
 						}
 					}
 				}
-
 			}
-			// Marca o vertice atual como visitado e o retira da lista de nao
-			// visitados
-			atual.visitar();
-			this.naoVisitados.remove(atual);
-			/*
-			 * Ordena a lista, para que o vertice com menor distancia fique na
-			 * primeira posicao
-			 */
-
-			Collections.sort(naoVisitados);
-			System.out.println("Nao foram visitados ainda:"+naoVisitados);
-
+			if(Arrays.equals(pesoAtual, peso)) {
+				peso = pesoAtual;
+				break;
+			}
+			else {
+				peso = pesoAtual;
+			}
 		}
-
-		return menorCaminho;
+		return peso;
 	}
-
-	  
-
-	
-	
 }

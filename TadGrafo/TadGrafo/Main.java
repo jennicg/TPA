@@ -112,6 +112,7 @@ public class Main {
         */
 
 		TADGrafo g2 = new TADGrafo("oiiii");
+		/*
 		g2.insertVertex("A", "1");
 		g2.insertVertex("B", "2");
 		g2.insertVertex("C", "3");
@@ -135,26 +136,59 @@ public class Main {
 		
 		
 		g2.insertEdge("E", "F", "E-F", 321,9);
+		*/
+		
+		g2.insertVertex("A", "1");
+		g2.insertVertex("B", "2");
+		g2.insertVertex("C", "3");
+		g2.insertVertex("D", "4");
+		g2.insertVertex("E", "5");
+		g2.insertVertex("F", "6");
+		g2.insertVertex("G", "7");
+
+
+		g2.insertEdge("A", "B", "A-B", 3, 3);
+		g2.insertEdge("A", "C", "A-C", 4, 5);
+		g2.insertEdge("A", "D", "A-D", 5, 6);
+		
+		g2.insertEdge("B", "D", "B-D", 6, 2);
+		
+		g2.insertEdge("C", "D", "C-D", 7, 2);
+		g2.insertEdge("C", "E", "C-E", 8, 6);
+		g2.insertEdge("C", "F", "C-F", 9, 3);
+		g2.insertEdge("C", "G", "C-G", 10, 7);
+				
+		g2.insertEdge("D", "F", "D-F", 11, 9);	
+		
+		g2.insertEdge("E", "F", "E-F", 12, 5);
+		g2.insertEdge("E", "G", "E-G", 13, 2);
+		
+		g2.insertEdge("F", "G", "F-G", 14, 1);
 		
 		Vertex A = g2.getVertex("A");
 		//System.out.println("AQUI: " + A);
 		Vertex F = g2.getVertex("F");
 		//System.out.println("AQUI: " + F.getDado());
 		
-        ProcessaGrafo dj = new ProcessaGrafo(g2);
-        List<Vertex> resultado = new ArrayList<Vertex>();
-        resultado = dj.encontrarMenorCaminhoDijkstra(g2,A,F);
-        System.out.println("Esse é o menor caminho feito pelo algoritmo:"
-				+ resultado);
-     
+		
+        ProcessaGrafo dj = new ProcessaGrafo(g2);    
+         
         
+        
+        int[]resultado  = new int[g2.numVertices()];
+        resultado = dj.dijkstra(g2, A);
+        System.out.println("O menor caminho de " + A.getLabel() + " para " + F.getLabel() + " tem custo de:");  
+        	System.out.println(resultado[F.getId()]);
+        
+        
+        
+        
+        int[]resultado1  = new int[g2.numVertices()];
+        resultado1 = dj.bellmanFord(g2, A);
+        System.out.println("O menor caminho de " + A.getLabel() + " para " + F.getLabel() + " tem custo de:");  
+        	System.out.println(resultado1[F.getId()]);
+   		
+  
 	}
 }
-		
-		
-
-	
-
-
-
 

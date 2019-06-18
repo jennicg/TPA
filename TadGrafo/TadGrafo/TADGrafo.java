@@ -21,6 +21,12 @@ public class TADGrafo {
     private LinkedList<Integer> lstEliminados = new LinkedList<Integer>();
     
     
+    private LinkedList<Edge> edges = new LinkedList<Edge>();
+    
+    
+  
+    
+    
     public TADGrafo(String nome){
         mat = new int[16][16];
         this.nome = nome;
@@ -192,13 +198,26 @@ public class TADGrafo {
         if(dicLblVertex.NO_SUCH_KEY()) {
             return null;
         }
-        
+
         int idEdge = mat[vOrigem.getId()][vDestino.getId()];
+
         
         if(idEdge == 0) {
             return null;
         }
         else {
+        	
+
+        	
+        	for(Edge e : this.edges) {
+        		if(e.getId() == idEdge) {
+        			return e;
+        		}
+
+        		
+        		
+        	}
+        	/*
             LinkedList<Object> lstEdgeKeys = dicLblEdge.keys();
           
             for(int i = 0; i < lstEdgeKeys.size(); i++) {
@@ -210,7 +229,9 @@ public class TADGrafo {
                 }
             }
         }
-        
+        return null;
+        */
+    }
         return null;
     }
     
@@ -367,11 +388,18 @@ public class TADGrafo {
             dicLblEdge.insertItem(label, e);
             mat[vOrigem.getId()][vDestino.getId()] = e.getId();
             quantEdges++;
+            
+             
+            
+            edges.add(e);
+            
+       
+            
+            
         } //Update of a existent arch
         else {
             e.setDado(o);
         }
-        
         return e; 
     }
     
@@ -621,9 +649,6 @@ public class TADGrafo {
     	return lst;
     }
     
-    
-    
-		
     
     
     
