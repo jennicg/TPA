@@ -14,10 +14,10 @@ import java.util.Stack;
 import java.util.TreeSet;
 
 public class ProcessaGrafo {
-	TADGrafo grafo;
+	TADGrafoD grafo;
 
 	
-	public  ProcessaGrafo(TADGrafo g) {
+	public  ProcessaGrafo(TADGrafoD g) {
 	 //Armazenar o grafo g
 	 grafo = g;
 	 
@@ -37,7 +37,7 @@ public class ProcessaGrafo {
 		else {
 			while(pilha.size() != 0) { //repetir o processo
 				Vertex aux = pilha.pollLast();// tirar o ultimo da pilha
-				LinkedList<Vertex> VertexSaida = grafo.inAdjacentVertices(aux.getLabel());        
+				LinkedList<Vertex> VertexSaida = grafo.outAdjacenteVertices(aux.getLabel());        
 	            LinkedList<Vertex> VertexSaida2 = new LinkedList<Vertex>();
 	                        for(int i = VertexSaida.size(); i > 0; i--){
 	                            VertexSaida2.add(VertexSaida.get(i-1));
@@ -72,7 +72,7 @@ public class ProcessaGrafo {
 		while(fila.size() != 0) {
 			Vertex aux = fila.pop(); //colocar na fila os adjacentes e tirar o primeiro
 			// ficar repetindo o processo com o próximo da fila
-			LinkedList<Vertex> VertexSaida = this.grafo.inAdjacentVertices(aux.getLabel());
+			LinkedList<Vertex> VertexSaida = this.grafo.outAdjacenteVertices(aux.getLabel());
 			if(VertexSaida.size() != 0) {
 				if(!retorno.contains(aux)) {
 					retorno.add(aux);
@@ -91,7 +91,7 @@ public class ProcessaGrafo {
 		return retorno;
 	}
 	
-	public static void floydWarshall(TADGrafo grafo, int [][] weights) {
+	public static void floyd_warshall(TADGrafoD grafo, int [][] weights) {
 		int numVertices = grafo.numVertices();
         double[][] dist = new double[numVertices][numVertices];
         for (double[] row : dist)
@@ -137,8 +137,8 @@ public class ProcessaGrafo {
         }
     }
 
-	public int[] dijkstra(TADGrafo grafo, Vertex v1) {
-		Vertex[] verticesGrafo = grafo.vertices();
+	public int[] dijkstra(TADGrafoD grafo, Vertex v1) {
+		Vertex[] verticesGrafo = grafo.vertices_aux();
 		int[]peso = new int[verticesGrafo.length];
 		String[] caminho = new String[peso.length];
 		LinkedList<Integer> vizinhos = new LinkedList<Integer>();
@@ -190,8 +190,8 @@ public class ProcessaGrafo {
 	}
 	
 	
-	public int[] bellmanFord(TADGrafo grafo, Vertex v1) {
-		Vertex[] verticesGrafo = grafo.vertices();
+	public int[] belman_ford(TADGrafoD grafo, Vertex v1) {
+		Vertex[] verticesGrafo = grafo.vertices_aux();
 		int[] peso = new int[verticesGrafo.length];
 		for(int i = 0; i < peso.length; i++) {
 			peso[i] = Integer.MAX_VALUE;

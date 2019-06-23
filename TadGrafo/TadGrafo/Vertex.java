@@ -1,118 +1,59 @@
 package TadGrafo;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-public class Vertex implements Comparable<Vertex> {
+
+public class Vertex  {
 	private String label;
 	private int id;
 	private Object dado;
-	private int distancia;
-    private boolean visitado = false;
-    private Vertex pai;
-    private List<Edge> arestas = new ArrayList<Edge>();
-    private List<Vertex> vizinhos = new ArrayList<Vertex>();
 
+	//Construtor da classe.
 	public Vertex (String label, Object dado) {
 		this.label = label;
 		this.dado = dado;
 		
 	}
+	
+	//Retorna o label do vertice.
 	public String getLabel() {
 		return label;
 	}
+	
+	//Define/redefine o label do vertice.
 	public void setLabel(String label) {
 		this.label = label;
 	}
+	
+	//Retorna o id do vertice.
 	public int getId() {
 		return id;
 	}
+	
+	//Define o id do vertice.
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	
+	
+	//Retorna o dado armazenado pelo objeto vertice (Vertex).
 	public Object getDado() {
 		return dado;
 	}
+	
+	//Define/redefine o campo dado.
 	public void setDado(Object dado) {
 		this.dado = dado;
 	}
+
 	
-	public void visitar (){
-        
-        this.visitado = true;
+//Compara dois objetos vertices.
+public boolean equals​(Vertex v){
+	if (this.label == v.getLabel() && this.getId() == v.getId()
+			&& this.getDado() == v.getDado())
+		return true;
+	return false;
 }
 
-public boolean verificarVisita(){
-        
-        return visitado;
-}
 
-public void setDistancia(int distancia){
-        
-        this.distancia = distancia;
-}
-
-public int getDistancia(){
-        
-        return this.distancia;
-}
-
-public void setPai(Vertex pai){
-        
-        this.pai = pai;
-}
-
-public Vertex getPai(){
-        
-        return this.pai;
-}
-
-public void setVizinhos(List<Vertex> vizinhos) {
-        
-        this.vizinhos.addAll(vizinhos);
-                        
-}
-
-public List<Vertex> getVizinhos(){
-        
-        return this.vizinhos;
-}
-
-public void setArestas(List <Edge> arestas){
-        
-        this.arestas.addAll(arestas);
-        
-}
-
-public List<Edge> getArestas() {
-        
-        return arestas;
-}
-
-public int compareTo(Vertex vertice) {
-          if(this.getDistancia() < vertice.getDistancia()) return -1;
-  else if(this.getDistancia() == vertice.getDistancia()) return 0;
-  
-  return 1;
-
-        
-}
-
-@Override
-public boolean equals(Object obj) {
-        if(obj instanceof Vertex){
-                Vertex vRef = (Vertex) obj;
-                if(this.getLabel().equals(vRef.getLabel())) return true;
-        }
-        return false;
-}
-
-@Override
-public String toString() {
-        String s = " ";
-        s+= this.getLabel();
-        return s;
-}
 
 }

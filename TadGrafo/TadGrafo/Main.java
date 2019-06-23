@@ -16,8 +16,8 @@ public class Main {
 
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		/*
-		TADGrafo g = new TADGrafo("oi");
+		
+		TADGrafoD g = new TADGrafoD("oi");
 		g.insertVertex("1", "1");
 		g.insertVertex("2", "2");
 		g.insertVertex("3", "3");
@@ -32,7 +32,7 @@ public class Main {
 		g.insertEdge("2", "1", "2-1", "2->1",8);
 		g.insertEdge("3", "1", "3-1", "3->1",4);
 		
-		TADGrafo g1 = new TADGrafo("oi");
+		TADGrafoD g1 = new TADGrafoD("oi");
 		g1.insertVertex("A", "1");
 		g1.insertVertex("B", "2");
 		g1.insertVertex("C", "3");
@@ -40,27 +40,27 @@ public class Main {
 		g1.insertVertex("E", "5");
 		g1.insertVertex("F", "6");
 		g1.insertVertex("G", "7");
+		g1.insertVertex("H", "7");
 
 
 	
 		g1.insertEdge("A", "B", "A-B", 3,4);
 		g1.insertEdge("A", "C", "A-C", 666,3);
-		g1.insertEdge("A", "E", "A-E", 123,7);
+		g1.insertEdge("A", "D", "A-D", 123,7);
+		g1.insertEdge("A", "F", "A-F", 123,7);
 		
-		g1.insertEdge("B", "D", "B-D", 321,5);
+
 		
-		g1.insertEdge("C", "D", "C-D", 321,11);
-		g1.insertEdge("C", "E", "C-E", 321,8);
-		g1.insertEdge("C", "B", "C-B", 321,6);
+		g1.insertEdge("C", "E", "C-E", 321,11);
+
 		
-		g1.insertEdge("D", "F", "D-F", 321,2);
+
 		
 		
-		g1.insertEdge("E", "D", "E-D", 321,2);
+		g1.insertEdge("E", "H", "E-H", 321,2);
 		
 		g1.insertEdge("F", "G", "F-G", 321,3);
 		
-		g1.insertEdge("G", "G", "G-D", 321,10);
 		
 		
 	
@@ -86,12 +86,13 @@ public class Main {
 		System.out.println();
 		
 		
-		ToGStream show = new ToGStream(g);
+		
+		ToGStream show = new ToGStream(g,true,true,true);
 		String css = "graph { fill-color: red; }";
 		String teste = null;
 		show.exibe(teste);
 		
-   
+		/*
         ToTGF.converteTxt_Tgf("movies2");
         TADGrafo grafo = ToTGF.carrega("movies2");
         grafo.printgrafo();
@@ -99,6 +100,7 @@ public class Main {
         ToGStream show1 = new ToGStream(grafo);
         String teste1 = null;
         show.exibe(teste1);
+        */
         
         
         //-------------------------------------
@@ -106,12 +108,12 @@ public class Main {
 		
 		int [][] pesos = { {1,2,3}, {1,4,7}, {2,1,8}, {2,3,2} , {3,1,5}, {3,4,1},
 				{4,1,2}};
-        ProcessaGrafo.floydWarshall(g,pesos);
+        ProcessaGrafo.floyd_warshall(g,pesos);
         
         
-        */
+        
 
-		TADGrafo g2 = new TADGrafo("oiiii");
+		TADGrafoD g2 = new TADGrafoD("oiiii");
 		/*
 		g2.insertVertex("A", "1");
 		g2.insertVertex("B", "2");
@@ -184,7 +186,7 @@ public class Main {
         
         
         int[]resultado1  = new int[g2.numVertices()];
-        resultado1 = dj.bellmanFord(g2, A);
+        resultado1 = dj.belman_ford(g2, A);
         System.out.println("O menor caminho de " + A.getLabel() + " para " + F.getLabel() + " tem custo de:");  
         	System.out.println(resultado1[F.getId()]);
    		

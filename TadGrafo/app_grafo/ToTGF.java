@@ -15,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-import TadGrafo.TADGrafo;
+import TadGrafo.TADGrafoD;
 import _my_tools.ArquivoTxt;
 
 public class ToTGF {
@@ -91,11 +91,11 @@ public class ToTGF {
 	    }
 	 
 	    
-	    public static TADGrafo carrega(String nome_arq){
+	    public static TADGrafoD carrega(String nome_arq){
 	        ArquivoTxt open = ArquivoTxt.open("./dicionario/_my_tools/"+nome_arq+".tgf", "rt");
 	        String linha;
 	        String[] separador;
-	        TADGrafo grafo = new TADGrafo("filmes", 300);
+	        TADGrafoD grafo = new TADGrafoD("filmes", 300);
 	        boolean achou = false;
 	        while((linha = open.readline()) != null){
 	            if(linha.contains("#")){
