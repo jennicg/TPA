@@ -772,6 +772,7 @@ public class TADGrafoD {
     }
     
     
+    
     /*
      * Descobre e retorna todas as arestas que saem do vértice de label lbl.
      */
