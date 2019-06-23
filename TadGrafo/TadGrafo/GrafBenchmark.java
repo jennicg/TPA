@@ -255,7 +255,7 @@ public class GrafBenchmark {
 		System.out.print("Gerando GraphStream..");
 		ToGStream togs = new ToGStream(g,false,false,false);
 		System.out.println("concluído!");		
-		togs.exibe("");
+		togs.exibe();
 	} /* fim de main */
 
 
