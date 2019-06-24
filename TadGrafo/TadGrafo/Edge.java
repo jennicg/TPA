@@ -4,8 +4,7 @@ public class Edge {
 	private String label;
 	private int id;
 	private Object dado;
-	private Vertex destination;
-	private Vertex source;
+	
 	int peso;
 	
 	
@@ -56,26 +55,6 @@ public class Edge {
 		this.dado = dado;
 	}
 	
-	//Utilizada como auxiliar na funcao clone
-	public Vertex getDestination() {
-        return destination;
-    }
-	
-	//Utilizada como auxiliar na funcao clone
-	public void setDestination(Vertex destination) {
-		this.destination = destination;
-	}
-	
-	
-	//Utilizada como auxiliar na funcao clone
-	public Vertex getSource() {
-        return source;
-    }
-	
-	//Utilizada como auxiliar na funcao clone
-	public void setSource(Vertex source) {
-		this.source = source;
-	}
 	
 	//Utilizada como auxiliar no ProcessaGrafo
 	public int getPeso() {

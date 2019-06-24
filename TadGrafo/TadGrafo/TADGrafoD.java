@@ -472,8 +472,8 @@ public class TADGrafoD {
         if(dicLblEdge.NO_SUCH_KEY()) {
             e = new Edge(label, o);
             e.setId(geraIDedge++);
-            e.setSource(vOrigem);
-            e.setDestination(vDestino);
+           // e.setSource(vOrigem);
+           // e.setDestination(vDestino);
             e.setPeso(peso);
             dicLblEdge.insertItem(label, e);
             mat[vOrigem.getId()][vDestino.getId()] = e.getId();
@@ -511,8 +511,8 @@ public class TADGrafoD {
         if(dicLblEdge.NO_SUCH_KEY()) {
             e = new Edge(label, o);
             e.setId(geraIDedge++);
-            e.setSource(vOrigem);
-            e.setDestination(vDestino);
+           // e.setSource(vOrigem);
+           // e.setDestination(vDestino);
             dicLblEdge.insertItem(label, e);
             mat[vOrigem.getId()][vDestino.getId()] = e.getId();
             quantEdges++;
@@ -985,6 +985,12 @@ private static int geraIDVertexaux(){
 						 Object outroVertex = OutroG.dicLblVertex.findElement(chave.getLabel());
 						 Edge e = intToEdge(k);
 						 Object outroEdge = OutroG.dicLblEdge.findElement(e.getLabel());
+						 if(OutroG.dicLblVertex.NO_SUCH_KEY()){
+		                        return false;
+		                    }
+		                    if(OutroG.dicLblEdge.NO_SUCH_KEY()){
+		                        return false;
+		                    }
 						 if(chave.getDado() != outroVertex) {
 							 return false;
 						 }
@@ -1011,8 +1017,10 @@ mesma estrutura e mesmo conteúdo.
 			   if(!lstEliminados.contains(k) && (mat[i][k] != 0)) {
 				   Vertex chave = intToVertex(k);
 				   grafoClone.insertVertex(chave.getLabel(), chave.getDado());
-				   Edge e = intToEdge(k);
-				   grafoClone.insertEdge(e.getSource().getLabel(), e.getDestination().getLabel(), e.getLabel(), e.getDado());
+				   Edge e = intToEdge(mat[i][k]);
+				   String origem = this.intToVertex(i).getLabel();
+                   String destino = this.intToVertex(k).getLabel();
+				   grafoClone.insertEdge(origem, destino, e.getLabel(), e.getDado());
 	   }
 		   }
 	   }
