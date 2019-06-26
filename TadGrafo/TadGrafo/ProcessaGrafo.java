@@ -17,9 +17,9 @@ public class ProcessaGrafo {
 	TADGrafoD grafo;
 
 	
-	public  ProcessaGrafo(TADGrafoD g) {
+	public  ProcessaGrafo(TADGrafoD grafo) {
 	 //Armazenar o grafo g
-	 grafo = g;
+	 this.grafo = grafo;
 	 
 	}
 	
@@ -91,15 +91,41 @@ public class ProcessaGrafo {
 		return retorno;
 	}
 	
-	public static void floyd_warshall(TADGrafoD grafo, int [][] weights) {
-		int numVertices = grafo.numVertices();
-        double[][] dist = new double[numVertices][numVertices];
+	
+	public void floyd_warshall() {
+		int numVertices = this.grafo.numVertices();
+		double [][] dist = new double [numVertices][numVertices];
         for (double[] row : dist)
             Arrays.fill(row, Double.POSITIVE_INFINITY);
- 
-        for (int[] w : weights)
-            dist[w[0] - 1][w[1] - 1] = w[2];
- 
+        
+        
+        int linha = 0;
+        
+        for( Vertex origem : this.grafo.vertices_aux() ) {
+        	int coluna = 0;
+        	for(Vertex destino : this.grafo.vertices_aux()) {
+        		if(origem.getId() != destino.getId()) {
+        			Edge e = this.grafo.getEdge(origem.getLabel(), destino.getLabel());
+            		if( e != null) {
+            		
+            			dist[linha][coluna] = e.getPeso();
+            			
+            		}
+            		else {
+            			dist[linha][coluna] = Integer.MAX_VALUE;
+            		}
+            		
+        			
+        		}
+        		else {
+        			dist[linha][coluna] =  0;
+				}
+        	
+        	coluna++;
+        	}
+        	linha++;
+        }
+        
         int[][] next = new int[numVertices][numVertices];
         for (int i = 0; i < next.length; i++) {
             for (int j = 0; j < next.length; j++)
@@ -116,8 +142,9 @@ public class ProcessaGrafo {
                     }
  
         printResult(dist, next);
-    }
- 
+        
+        }
+	
     static void printResult(double[][] dist, int[][] next) {
         System.out.println("par     dist    caminho");
         for (int i = 0; i < next.length; i++) {
@@ -128,7 +155,7 @@ public class ProcessaGrafo {
                     String caminho = String.format("%d -> %d    %2d     %s", u, v,
                             (int) dist[i][j], u);
                     do {
-                        u = next[u - 1][v - 1];
+                        u = next[u -1 ][v-1 ];
                         caminho += " -> " + u;
                     } while (u != v);
                     System.out.println(caminho);
@@ -137,8 +164,8 @@ public class ProcessaGrafo {
         }
     }
 
-	public int[] dijkstra(TADGrafoD grafo, Vertex v1) {
-		Vertex[] verticesGrafo = grafo.vertices_aux();
+	public int[] dijkstra(Vertex v1) {
+		Vertex[] verticesGrafo = this.grafo.vertices_aux();
 		int[]peso = new int[verticesGrafo.length];
 		String[] caminho = new String[peso.length];
 		LinkedList<Integer> vizinhos = new LinkedList<Integer>();
@@ -190,8 +217,8 @@ public class ProcessaGrafo {
 	}
 	
 	
-	public int[] belman_ford(TADGrafoD grafo, Vertex v1) {
-		Vertex[] verticesGrafo = grafo.vertices_aux();
+	public int[] belman_ford(Vertex v1) {
+		Vertex[] verticesGrafo = this.grafo.vertices_aux();
 		int[] peso = new int[verticesGrafo.length];
 		for(int i = 0; i < peso.length; i++) {
 			peso[i] = Integer.MAX_VALUE;

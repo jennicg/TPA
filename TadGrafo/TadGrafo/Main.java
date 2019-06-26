@@ -108,7 +108,8 @@ public class Main {
 		
 		int [][] pesos = { {1,2,3}, {1,4,7}, {2,1,8}, {2,3,2} , {3,1,5}, {3,4,1},
 				{4,1,2}};
-        ProcessaGrafo.floyd_warshall(g,pesos);
+		ProcessaGrafo oi = new ProcessaGrafo(g);
+		oi.floyd_warshall();
         
         
         
@@ -178,7 +179,7 @@ public class Main {
         
         
         int[]resultado  = new int[g2.numVertices()];
-        resultado = dj.dijkstra(g2, A);
+        //resultado = dj.dijkstra(g2, A);
         System.out.println("O menor caminho de " + A.getLabel() + " para " + F.getLabel() + " tem custo de:");  
         	System.out.println(resultado[F.getId()]);
         
@@ -186,7 +187,7 @@ public class Main {
         
         
         int[]resultado1  = new int[g2.numVertices()];
-        resultado1 = dj.belman_ford(g2, A);
+       // resultado1 = dj.belman_ford(g2, A);
         System.out.println("O menor caminho de " + A.getLabel() + " para " + F.getLabel() + " tem custo de:");  
         	System.out.println(resultado1[F.getId()]);
    		
